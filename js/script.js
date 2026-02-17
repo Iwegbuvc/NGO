@@ -1,3 +1,13 @@
+// Hamburger menu toggle
+document.addEventListener("DOMContentLoaded", function () {
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navMenu = document.getElementById('navMenu');
+  if (hamburgerBtn && navMenu) {
+    hamburgerBtn.addEventListener('click', function () {
+      navMenu.classList.toggle('open');
+    });
+  }
+});
 // Swiper JS will be imported from CDN in index.html
 // Initialize Swiper after DOM loads
 
@@ -6,8 +16,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const scrollToTopBtn = document.getElementById("scrollToTopBtn");
     const heroSection = document.querySelector(".hero-section");
     function checkScroll() {
-      const heroBottom = heroSection.getBoundingClientRect().bottom;
-      if (heroBottom < 0) {
+      let show = false;
+      if (heroSection) {
+        const heroBottom = heroSection.getBoundingClientRect().bottom;
+        show = heroBottom < 0;
+      } else {
+        show = window.scrollY > 300;
+      }
+      if (show) {
         scrollToTopBtn.classList.add("show");
       } else {
         scrollToTopBtn.classList.remove("show");

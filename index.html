@@ -14,13 +14,17 @@
   </head>
   <body>
     <nav>
-      <!-- Logo and navigation links go here -->
       <header>NGO_LOGO</header>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Contact</a></li>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul id="navMenu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
     <div class="main-container">
@@ -45,7 +49,7 @@
       <!-- Hero Section End -->
     </div>
     <!-- Scroll to Top Button -->
-    <button id="scrollToTopBtn" aria-label="Scroll to top">
+    <button id="scrollToTopBtn" class="show" aria-label="Scroll to top" style="background: red !important; border: 3px solid yellow !important; color: #fff !important;">
       &#8679;
     </button>
       <!-- About Section Start -->
@@ -54,8 +58,7 @@
           <div class="left-cont">
             <h3>About Us</h3>
             <h2>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-              assumenda.
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </h2>
             <img src="./Asset/featured.webp" alt="" />
           </div>
@@ -204,7 +207,7 @@
                   </div>
                 </div>
               </div>
-              <div class="swiper-pagination swiper-pagination-fraction"></div>
+              <!-- <div class="swiper-pagination swiper-pagination-fraction"></div> -->
               <div class="swiper-button-prev"></div>
               <div class="swiper-button-next"></div>
             </div>
