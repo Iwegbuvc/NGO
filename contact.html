@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NGO_PLATFORM</title>
+        <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <!-- Swiper CSS CDN -->
     <link
       rel="stylesheet"
@@ -15,9 +17,28 @@
   <body>
     <main>
       <nav>
-        <!-- Logo and navigation links go here -->
         <header>NGO_LOGO</header>
-        <ul>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <!-- Sidebar Mobile Nav -->
+        <div id="navOverlay" class="nav-overlay"></div>
+        <aside id="mobileNav" class="mobile-nav">
+          <div class="mobile-nav-header">
+            <img src="Asset/ngo_logo.png" alt="NGO Logo" class="mobile-nav-logo" />
+            <button class="close-nav" id="closeNavBtn" aria-label="Close navigation">&times;</button>
+          </div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </aside>
+        <!-- Desktop Nav -->
+        <ul id="navMenu" class="desktop-nav">
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="projects.html">Projects</a></li>
@@ -90,17 +111,17 @@
             <li><span>&#9993;</span> info@ngo-platform.org</li>
             <li><span>&#9873;</span> 123 Charity Road, City, Country</li>
           </ul>
-          <div class="footer-social">
-            <a href="#"><span>&#xf09a;</span></a>
-            <a href="#"><span>&#xf099;</span></a>
-            <a href="#"><span>&#xf16d;</span></a>
-            <a href="#"><span>&#xf0e1;</span></a>
-          </div>
+           <div class="footer-social">
+              <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+            </div>
         </div>
       </div>
       <div class="footer-bottom">
         <p>NGO_PLATFORM &copy; 2026. All rights reserved.</p>
       </div>
     </footer>
+    <script src="js/script.js"></script>
   </body>
 </html>

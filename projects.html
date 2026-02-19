@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NGO_PLATFORM</title>
+        <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <!-- Swiper CSS CDN -->
     <link
       rel="stylesheet"
@@ -16,12 +18,27 @@
     <main>
       <nav>
         <header>NGO_LOGO</header>
-        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation">
           <span></span>
           <span></span>
           <span></span>
         </button>
-        <ul id="navMenu">
+        <!-- Sidebar Mobile Nav -->
+        <div id="navOverlay" class="nav-overlay"></div>
+        <aside id="mobileNav" class="mobile-nav">
+          <div class="mobile-nav-header">
+            <img src="Asset/ngo_logo.png" alt="NGO Logo" class="mobile-nav-logo" />
+            <button class="close-nav" id="closeNavBtn" aria-label="Close navigation">&times;</button>
+          </div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </aside>
+        <!-- Desktop Nav -->
+        <ul id="navMenu" class="desktop-nav">
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="projects.html">Projects</a></li>
@@ -40,7 +57,6 @@
       </section>
        <!-- ...List of Projects Start... -->
       <section class="project-section">
-     <!-- ...existing code... -->
 <div class="projects-grid">
   <div class="project-card" onclick="viewProject('project1')">
     <img src="./Asset/product_14.png" alt="Project 1">
@@ -60,9 +76,11 @@
   </div>
   <!-- Add more project cards as needed -->
 </div>
-<!-- ...existing code... -->
+
       <!-- ...List of Projects End... -->
       <!-- Footer Section Start -->
+    </main>
+    <!-- ...existing code... -->
     <!-- Footer Section Start -->
     <footer class="footer-section">
       <div class="footer-container">
@@ -90,12 +108,11 @@
             <li><span>&#9993;</span> info@ngo-platform.org</li>
             <li><span>&#9873;</span> 123 Charity Road, City, Country</li>
           </ul>
-          <div class="footer-social">
-            <a href="#"><span>&#xf09a;</span></a>
-            <a href="#"><span>&#xf099;</span></a>
-            <a href="#"><span>&#xf16d;</span></a>
-            <a href="#"><span>&#xf0e1;</span></a>
-          </div>
+           <div class="footer-social">
+              <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+            </div>
         </div>
       </div>
       <div class="footer-bottom">
@@ -103,4 +120,5 @@
       </div>
     </footer>
   </body>
+  <script src="js/script.js"></script>
 </html>

@@ -1,20 +1,38 @@
-// Hamburger menu toggle
+// Hamburger/Sidebar Mobile Nav
 document.addEventListener("DOMContentLoaded", function () {
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
-  if (hamburgerBtn && navMenu) {
-    hamburgerBtn.addEventListener('click', function () {
-      navMenu.classList.toggle('open');
+  const hamburgerBtn = document.getElementById("hamburgerBtn");
+  const mobileNav = document.getElementById("mobileNav");
+  const navOverlay = document.getElementById("navOverlay");
+  const closeNavBtn = document.getElementById("closeNavBtn");
+  // Open sidebar
+  if (hamburgerBtn && mobileNav && navOverlay) {
+    hamburgerBtn.addEventListener("click", function () {
+      mobileNav.classList.add("active");
+      navOverlay.classList.add("active");
+      document.body.style.overflow = "hidden";
     });
+  }
+  // Close sidebar
+  function closeSidebar() {
+    mobileNav.classList.remove("active");
+    navOverlay.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+  if (closeNavBtn) {
+    closeNavBtn.addEventListener("click", closeSidebar);
+  }
+  if (navOverlay) {
+    navOverlay.addEventListener("click", closeSidebar);
   }
 });
 // Swiper JS will be imported from CDN in index.html
 // Initialize Swiper after DOM loads
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Scroll to Top Button Logic
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-    const heroSection = document.querySelector(".hero-section");
+  // Scroll to Top Button Logic (guarded)
+  const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+  const heroSection = document.querySelector(".hero-section");
+  if (scrollToTopBtn) {
     function checkScroll() {
       let show = false;
       if (heroSection) {
@@ -34,6 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
     checkScroll();
+  }
   var swiper = new Swiper(".swiper", {
     loop: true,
     autoplay: {
@@ -70,23 +89,33 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   });
   // Testimonial modal logic
-//   const testimonialSlides = document.querySelectorAll(".testimonial-slide img");
-//   const modal = document.getElementById("testimonialModal");
-//   const modalText = document.getElementById("testimonialText");
-//   const closeModal = document.getElementById("closeModal");
+  //   const testimonialSlides = document.querySelectorAll(".testimonial-slide img");
+  //   const modal = document.getElementById("testimonialModal");
+  //   const modalText = document.getElementById("testimonialText");
+  //   const closeModal = document.getElementById("closeModal");
 
-//   testimonialSlides.forEach((img) => {
-//     img.addEventListener("click", function () {
-//       const content = img.parentElement.getAttribute("data-content");
-//       modalText.textContent = content;
-//       modal.style.display = "flex";
-//     });
-//   });
+  //   testimonialSlides.forEach((img) => {
+  //     img.addEventListener("click", function () {
+  //       const content = img.parentElement.getAttribute("data-content");
+  //       modalText.textContent = content;
+  //       modal.style.display = "flex";
+  //     });
+  //   });
 
-//   closeModal.addEventListener("click", function () {
-//     modal.style.display = "none";
-//   });
+  //   closeModal.addEventListener("click", function () {
+  //     modal.style.display = "none";
+  //   });
 
-//   window.addEventListener("click", function (e) {
+  //   window.addEventListener("click", function (e) {
+});
 
+// Fade-in animation for main sections
+window.addEventListener('DOMContentLoaded', function () {
+  const fadeSections = document.querySelectorAll('.about-section, .projects-grid, .testimonial-section, .contact-section');
+  fadeSections.forEach((section, i) => {
+    setTimeout(() => {
+      section.style.opacity = '1';
+      section.style.transform = 'none';
+    }, 200 + i * 200);
+  });
 });
