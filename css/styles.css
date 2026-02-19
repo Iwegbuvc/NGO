@@ -3,7 +3,7 @@
   .mobile-nav ul li a {
     position: relative;
   }
-  .mobile-nav ul li a::after {
+  /* .mobile-nav ul li a::after {
     content: "";
     display: block;
     position: absolute;
@@ -14,10 +14,10 @@
     background: #17843b;
     transition: width 0.3s;
     border-radius: 2px;
-  }
-  .mobile-nav ul li a:hover::after {
+  } */
+  /* .mobile-nav ul li a:hover::after {
     width: 100%;
-  }
+  } */
 }
 @media (min-width: 901px) {
   .desktop-nav li a {
@@ -43,20 +43,7 @@
 nav ul li a {
   position: relative;
 }
-nav ul li a::after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 3px;
-  background: #17843b;
-  transition: width 0.3s;
-  border-radius: 2px;
-  /* Make underline match text width */
-  width: 0;
-}
+
 nav ul li a:hover::after {
   width: 100%;
 }
