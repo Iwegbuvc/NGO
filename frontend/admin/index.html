@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alex Okorie Foundation Admin Panel</title>
+    <link rel="stylesheet" href="css/admin.min.css" />
+  </head>
+  <body>
+    <nav class="admin-nav">
+      <div class="nav-header">
+        <h2>Admin Panel</h2>
+        <button
+          class="admin-hamburger"
+          id="adminHamburgerBtn"
+          aria-label="Open navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+      <ul>
+        <li><a href="#slider">Homepage Slider</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+    </nav>
+    <div id="adminNavOverlay" class="admin-nav-overlay"></div>
+    <aside id="adminMobileNav" class="admin-mobile-nav">
+      <div class="mobile-nav-header">
+        <h2 style="margin: 0; font-size: 1.3em">Admin Panel</h2>
+        <button
+          class="close-nav"
+          id="closeAdminNavBtn"
+          aria-label="Close navigation"
+        >
+          &times;
+        </button>
+      </div>
+      <ul>
+        <li><a href="index.html">Homepage Slider</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li>
+          <button id="logoutBtnMobile" class="logout-btn" style="width: 100%">
+            Logout
+          </button>
+        </li>
+      </ul>
+    </aside>
+    <main>
+      <!-- Slider Images Section -->
+      <section id="slider">
+        <h3>Homepage Slider Images</h3>
+        <form id="slider-upload-form" enctype="multipart/form-data">
+          <input type="file" name="sliderImage" accept="image/*" required />
+          <button type="submit">Upload Image</button>
+        </form>
+        <div id="slider-images-list"></div>
+      </section>
+
+      <!-- ...existing code... -->
+    </main>
+    <script src="js/auth-check.min.js"></script>
+    <script src="js/toast.min.js"></script>
+    <script src="js/logout.min.js"></script>
+    <script src="js/admin-nav.min.js"></script>
+    <script src="js/admin.min.js"></script>
+  </body>
+</html>

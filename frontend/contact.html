@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+        <style>
+          .reveal-section { opacity: 0; transform: translateY(40px) scale(0.98); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1); }
+          .reveal-section.reveal { opacity: 1; transform: none; }
+        </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alex Okorie Foundation</title>
+        <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Swiper CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="css/styles.min.css" />
+  </head>
+  <body>
+    <main>
+      <nav>
+        <a href="index.html" class="logo-link">
+        <img src="Asset/logo.jpeg" alt="Alex Okorie Logo" class="main-logo" style="height:50px; width:auto;" />
+      </a>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <!-- Sidebar Mobile Nav -->
+        <div id="navOverlay" class="nav-overlay"></div>
+        <aside id="mobileNav" class="mobile-nav">
+          <div class="mobile-nav-header">
+ <a href="index.html" class="logo-link">
+        <img src="Asset/logo.jpeg" alt="Alex Okorie Logo" class="main-logo" style="height:42px; width:auto;" />
+      </a>
+            <button class="close-nav" id="closeNavBtn" aria-label="Close navigation">&times;</button>
+          </div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </aside>
+        <!-- Desktop Nav -->
+        <ul id="navMenu" class="desktop-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <section class="about-hero">
+        <img
+          src="/Asset/banner-3.jpg"
+          alt="About Us Banner"
+          class="about-hero-img"
+        />
+        <div class="about-hero-text">
+          <h1>Contact Us</h1>
+        </div>
+      </section>
+       <!-- Contact Section Start -->
+      <section class="contact-section reveal-section">
+            <script>
+              // Scroll reveal for main sections
+              document.addEventListener('DOMContentLoaded', function() {
+                const revealSections = document.querySelectorAll('.reveal-section');
+                const observer = new window.IntersectionObserver((entries, obs) => {
+                  entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                      entry.target.classList.add('reveal');
+                      obs.unobserve(entry.target);
+                    }
+                  });
+                }, { threshold: 0.18 });
+                revealSections.forEach(sec => observer.observe(sec));
+              });
+            </script>
+         <div class="contact-container">
+           <div class="contact-info-box">
+             <h2>Contact Information</h2>
+             <ul class="contact-info-list">
+               <li><span class="contact-icon">&#9742;</span> (+234)8099990941</li>
+               <li><span class="contact-icon">&#9993;</span> info@ngo-platform.org</li>
+               <li><span class="contact-icon">&#9873;</span> 123 Charity Road, City, Country</li>
+             </ul>
+             <div class="contact-social">
+               <a href="#" aria-label="Facebook"><span>&#xf09a;</span></a>
+               <a href="#" aria-label="Twitter"><span>&#xf099;</span></a>
+               <a href="#" aria-label="Instagram"><span>&#xf16d;</span></a>
+               <a href="#" aria-label="LinkedIn"><span>&#xf0e1;</span></a>
+             </div>
+           </div>
+           <form class="contact-form">
+             <h2>Drop a message</h2>
+             <input type="text" name="name" placeholder="Name" required />
+             <input type="email" name="email" placeholder="Email" required />
+             <textarea name="message" placeholder="Message" rows="5" required></textarea>
+             <button type="submit">Send Message</button>
+           </form>
+         </div>
+       </section>
+       <!-- Contact Section End -->
+  
+      <!-- Footer Section Start -->
+    <!-- Footer Section Start -->
+    <footer class="footer-section">
+      <div class="footer-container">
+        <div class="footer-about">
+         <a href="index.html" class="logo-link">
+        <img src="Asset/logo.jpeg" alt="NGO Logo" class="main-logo" style="height:50px; width:auto;" />
+      </a>
+          <p>
+            The Alex Okorie Foundation was born from a desire to ensure that the light of an extraordinary man never fades. We are a non-profit organization founded in loving memory of Alex Okorie—a man who was, to many, a mentor, a hero, and a comforter. To his family, he was a loving husband and a wonderful father.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+           <ul>
+            <li><a href="index.html#testimonials">Testimonials</a></li>
+            <li><a href="./projects.html">Gallery</a></li>
+            <li><a href="./contact.html">FAQ</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><span>&#9742;</span> (+234)8099990941</li>
+            <li><span>&#9993;</span> info@alexokoriefoundation.org</li>
+            <li><span>&#9873;</span> 123 Charity Road, City, Country</li>
+          </ul>
+           <div class="footer-social">
+              <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+            </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Alex Okorie Foundation &copy; 2026. All rights reserved.</p>
+      </div>
+    </footer>
+    <script src="js/script.min.js"></script>
+  </body>
+</html>

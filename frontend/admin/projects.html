@@ -1,0 +1,131 @@
+<!-- Edit Project Modal -->
+<!-- Delete Confirmation Modal -->
+<div id="deleteProjectModal" class="modal" style="display: none">
+  <div class="modal-content" style="max-width: 340px">
+    <span class="close-modal" id="closeDeleteModal">&times;</span>
+    <h3>Delete Project</h3>
+    <p>Are you sure you want to delete this project?</p>
+    <div
+      style="
+        display: flex;
+        gap: 1em;
+        justify-content: center;
+        margin-top: 1.5em;
+      "
+    >
+      <button id="cancelDeleteBtn" style="background: #888">Cancel</button>
+      <button id="confirmDeleteBtn" style="background: #e53e3e">Delete</button>
+    </div>
+  </div>
+</div>
+<div id="editProjectModal" class="modal" style="display: none">
+  <div class="modal-content">
+    <span class="close-modal" id="closeEditModal">&times;</span>
+    <h3>Edit Project</h3>
+    <form id="edit-project-form">
+      <input
+        type="text"
+        name="editLocation"
+        id="editLocation"
+        placeholder="Location"
+        required
+      />
+      <textarea
+        name="editDescription"
+        id="editDescription"
+        placeholder="Description"
+        required
+      ></textarea>
+      <textarea
+        name="editText"
+        id="editText"
+        placeholder="Title/Text"
+        required
+      ></textarea>
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alex Okorie Foundation</title>
+    <link rel="stylesheet" href="css/admin.min.css" />
+  </head>
+  <body>
+    <nav class="admin-nav">
+      <div class="nav-header">
+        <h2>Admin Panel</h2>
+        <button
+          class="admin-hamburger"
+          id="adminHamburgerBtn"
+          aria-label="Open navigation"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <button id="logoutBtn" class="logout-btn">Logout</button>
+      </div>
+      <ul>
+        <li><a href="index.html">Homepage Slider</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="projects.html">Projects</a></li>
+      </ul>
+    </nav>
+    <div id="adminNavOverlay" class="admin-nav-overlay"></div>
+    <aside id="adminMobileNav" class="admin-mobile-nav">
+      <div class="mobile-nav-header">
+        <h2 style="margin: 0; font-size: 1.3em">Admin Panel</h2>
+        <button
+          class="close-nav"
+          id="closeAdminNavBtn"
+          aria-label="Close navigation"
+        >
+          &times;
+        </button>
+      </div>
+      <ul>
+        <li><a href="index.html">Homepage Slider</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li>
+          <button id="logoutBtnMobile" class="logout-btn" style="width: 100%">
+            Logout
+          </button>
+        </li>
+      </ul>
+    </aside>
+    <main>
+      <section id="projects">
+        <h3>Manage Projects</h3>
+        <form id="project-form" enctype="multipart/form-data">
+          <input
+            type="file"
+            name="projectImages"
+            accept="image/*"
+            multiple
+            required
+          />
+          <input type="text" name="location" placeholder="Location" required />
+
+          <input type="text" name="text" placeholder="Heading/Title" required />
+          <textarea
+            name="description"
+            placeholder="Description"
+            required
+          ></textarea>
+          <button type="submit">Add Project</button>
+        </form>
+        <div id="projects-list"></div>
+        <div id="projects-pagination" class="pagination"></div>
+      </section>
+    </main>
+    <script src="js/auth-check.min.js"></script>
+    <script src="js/toast.min.js"></script>
+    <script src="js/logout.min.js"></script>
+    <script src="js/admin-nav.min.js"></script>
+    <script src="js/admin.min.js"></script>
+  </body>
+</html>

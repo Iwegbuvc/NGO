@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Font Awesome for eye icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <meta charset="UTF-8" />
+    <title>Alex Okorie Foundation</title>
+    <link rel="stylesheet" href="css/admin.min.css" />
+    <style>
+      .register-container {
+        max-width: 400px;
+        margin: 5em auto;
+        background: #fff;
+        padding: 2em 2em 1.5em 2em;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(30, 40, 90, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+      }
+      .register-container h2 {
+        text-align: center;
+        margin-bottom: 1em;
+        color: #2e3657;
+      }
+      .register-container input {
+        padding: 0.7em 1em;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 1em;
+        background: #f7f8fa;
+        transition: border 0.2s;
+      }
+      .register-container button {
+        padding: 0.7em 1.5em;
+        background: linear-gradient(90deg, #2e3657 60%, #4e5ba6 100%);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(30, 40, 90, 0.06);
+        transition:
+          background 0.2s,
+          box-shadow 0.2s;
+      }
+      .register-container button:hover {
+        background: linear-gradient(90deg, #4e5ba6 60%, #2e3657 100%);
+      }
+      .register-error {
+        color: #e53e3e;
+        text-align: center;
+        font-size: 1em;
+      }
+      .register-success {
+        color: #38a169;
+        text-align: center;
+        font-size: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="register-container">
+      <h2>Admin Registration</h2>
+      <form id="register-form">
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Full Name"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          required
+        />
+        <div style="position: relative; width: 100%">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+            style="width: 100%; box-sizing: border-box; padding-right: 38px"
+          />
+          <span
+            id="togglePassword"
+            aria-label="Show/Hide Password"
+            style="
+              position: absolute;
+              right: 10px;
+              top: 50%;
+              transform: translateY(-50%);
+              background: none;
+              border: none;
+              outline: none;
+              cursor: pointer;
+              font-size: 1.3em;
+              color: #888;
+              padding: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 100%;
+            "
+          >
+            <i class="fa fa-eye" id="togglePasswordIcon"></i>
+          </span>
+        </div>
+        <button type="submit">Register</button>
+      </form>
+      <div
+        id="register-message"
+        style="margin-top: 1em; text-align: center"
+      ></div>
+      <div style="margin-top: 1.2em; text-align: center">
+        <span>Already have an account?</span>
+        <a
+          href="login.html"
+          style="
+            color: #0ea5e9;
+            text-decoration: underline;
+            font-weight: 500;
+            margin-left: 4px;
+          "
+          >Login</a
+        >
+      </div>
+      <!-- Removed unused error/success divs -->
+    </div>
+    <script src="js/toast.js"></script>
+    <script>
+      // Password visibility toggle
+      document.addEventListener("DOMContentLoaded", function () {
+        const pwdInput = document.getElementById("password");
+        const toggle = document.getElementById("togglePassword");
+        const toggleIcon = document.getElementById("togglePasswordIcon");
+        if (toggle && pwdInput && toggleIcon) {
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            const type = pwdInput.type === "password" ? "text" : "password";
+            pwdInput.type = type;
+            toggleIcon.className =
+              type === "password" ? "fa fa-eye" : "fa fa-eye-slash";
+          });
+          toggle.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              toggle.click();
+            }
+          });
+        }
+        // Registration form submit
+        const form = document.getElementById("register-form");
+        const msg = document.getElementById("register-message");
+        form.addEventListener("submit", async function (e) {
+          e.preventDefault();
+          msg.textContent = "";
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          try {
+            const res = await fetch(
+              "https://alexokoriengobe.onrender.com/api/auth/register",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, password }),
+              },
+            );
+            const data = await res.json();
+            if (res.ok) {
+              msg.style.color = "#17843b";
+              msg.textContent = "Registration successful! You can now log in.";
+              form.reset();
+            } else {
+              msg.style.color = "#e53e3e";
+              msg.textContent = data.message || "Registration failed.";
+            }
+          } catch (err) {
+            msg.style.color = "#e53e3e";
+            msg.textContent = "Network error. Please try again.";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
