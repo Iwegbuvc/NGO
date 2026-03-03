@@ -115,7 +115,8 @@
             <i class="fa fa-eye" id="togglePasswordIcon"></i>
           </span>
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" id="register-btn">Register</button>
+        <div id="register-message" style="margin-top:0.5em;text-align:center;font-size:1em;"></div>
       </form>
       <div
         id="register-message"
@@ -193,4 +194,40 @@
       });
     </script>
   </body>
+    <script>
+      document.getElementById('register-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('register-btn');
+        const messageDiv = document.getElementById('register-message');
+        btn.disabled = true;
+        const originalText = btn.textContent;
+        btn.textContent = 'Registering...';
+        messageDiv.textContent = '';
+        // Example payload, update endpoint and payload as needed
+        const name = this.name.value.trim();
+        const email = this.email.value.trim();
+        const password = this.password.value;
+        try {
+          const res = await fetch('https://alexokoriengobe.onrender.com/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password })
+          });
+          if (res.ok) {
+            messageDiv.style.color = '#17843b';
+            messageDiv.textContent = 'Registration successful!';
+            // Redirect or further logic here
+          } else {
+            const data = await res.json();
+            messageDiv.style.color = '#e53e3e';
+            messageDiv.textContent = data.message || 'Registration failed.';
+          }
+        } catch (err) {
+          messageDiv.style.color = '#e53e3e';
+          messageDiv.textContent = 'Network error. Please try again.';
+        }
+        btn.disabled = false;
+        btn.textContent = originalText;
+      });
+    </script>
 </html>

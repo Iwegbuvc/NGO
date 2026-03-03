@@ -1,57 +1,251 @@
 <!doctype html>
 <html lang="en">
   <head>
+          <style>
+            .admin-hamburger span {
+              background: #fff !important;
+              height: 3px !important;
+              width: 28px !important;
+              display: block;
+              margin: 5px 0;
+              border-radius: 2px;
+              transition: 0.3s;
+            }
+            .admin-hamburger {
+              background: none;
+              border: none;
+              outline: none;
+              display: inline-flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              width: 40px;
+              height: 40px;
+              cursor: pointer;
+            }
+          </style>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu toggle
+            const hamburger = document.getElementById('adminHamburgerBtn');
+            const mobileNav = document.getElementById('adminMobileNav');
+            const navOverlay = document.getElementById('adminNavOverlay');
+            const closeBtn = document.getElementById('closeAdminNavBtn');
+            function openMobileNav() {
+              mobileNav.classList.add('active');
+              navOverlay.classList.add('active');
+            }
+            function closeMobileNav() {
+              mobileNav.classList.remove('active');
+              navOverlay.classList.remove('active');
+            }
+            hamburger.addEventListener('click', openMobileNav);
+            closeBtn.addEventListener('click', closeMobileNav);
+            navOverlay.addEventListener('click', closeMobileNav);
+            // Responsive nav: hide desktop links on small screens
+            function handleResize() {
+              const navLinks = document.querySelector('.nav-header ul');
+              if (window.innerWidth <= 900) {
+                if (navLinks) navLinks.style.display = 'none';
+                hamburger.style.display = 'inline-flex';
+              } else {
+                if (navLinks) navLinks.style.display = 'flex';
+                hamburger.style.display = 'none';
+                closeMobileNav();
+              }
+            }
+            window.addEventListener('resize', handleResize);
+            handleResize();
+          });
+        </script>
     <meta charset="UTF-8" />
-    <title>Alex Okorie Foundation Admin Panel</title>
+    <title>Admin Dashboard | Alex Okorie Foundation</title>
     <link rel="icon" type="image/svg+xml" href="/Asset/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/admin.min.css" />
+    <style>
+      body, h1, h2, h3, h4, h5, h6, input, button, textarea {
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      }
+      .dashboard-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2em 0 1em 0;
+      }
+      .dashboard-title {
+        font-size: 2.2em;
+        font-weight: 700;
+        color: #2e3657;
+        margin: 0;
+      }
+      .dashboard-welcome {
+        font-size: 1.1em;
+        color: #4e5ba6;
+        font-weight: 500;
+      }
+      .dashboard-cards {
+        display: flex;
+        gap: 2em;
+        flex-wrap: wrap;
+        margin-bottom: 2em;
+      }
+      .dashboard-card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(30,40,90,0.08);
+        padding: 2em 1.5em;
+        min-width: 220px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.7em;
+        transition: box-shadow 0.2s;
+      }
+      .dashboard-card:hover {
+        box-shadow: 0 4px 24px rgba(30,40,90,0.14);
+      }
+      .dashboard-card-title {
+        font-size: 1.2em;
+        font-weight: 600;
+        color: #2e3657;
+        margin-bottom: 0.3em;
+      }
+      .dashboard-card-desc {
+        font-size: 1em;
+        color: #444;
+        margin-bottom: 0.5em;
+      }
+      .dashboard-card-link {
+        color: #0ea5e9;
+        text-decoration: underline;
+        font-weight: 500;
+        font-size: 1em;
+        transition: color 0.2s;
+      }
+      .dashboard-card-link:hover {
+        color: #2e3657;
+      }
+      @media (max-width: 900px) {
+        .dashboard-cards {
+          flex-direction: column;
+          gap: 1em;
+        }
+      }
+    </style>
   </head>
   <body>
-    <nav class="admin-nav">
-      <div class="nav-header">
-        <h2>Admin Panel</h2>
-        <button
-          class="admin-hamburger"
-          id="adminHamburgerBtn"
-          aria-label="Open navigation"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <button id="logoutBtn" class="logout-btn">Logout</button>
+        <style>
+          @media (max-width: 900px) {
+            .dashboard-header {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 0.7em;
+            }
+            .dashboard-title {
+              font-size: 1.5em;
+            }
+            .dashboard-cards {
+              flex-direction: column;
+              gap: 1em;
+            }
+            .nav-header ul {
+              display: none !important;
+            }
+            .admin-hamburger {
+              display: inline-flex !important;
+            }
+            .admin-mobile-nav {
+              display: none;
+            }
+            .admin-mobile-nav.active {
+              display: flex;
+            }
+            .admin-nav-overlay {
+              display: none;
+            }
+            .admin-nav-overlay.active {
+              display: block;
+            }
+          }
+          @media (max-width: 600px) {
+            main {
+              padding: 0.5em;
+            }
+            .dashboard-header {
+              padding: 1em 0 0.5em 0;
+            }
+            .dashboard-title {
+              font-size: 1.2em;
+            }
+            .dashboard-card {
+              padding: 1em 0.7em;
+            }
+          }
+        </style>
+    <nav class="admin-nav" style="background:#181c2f;color:#fff;padding:0.7em 0 0.7em 0;box-shadow:0 2px 12px rgba(30,40,90,0.08);">
+      <div class="nav-header" style="display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;">
+        <a href="../index.html" class="logo-link" style="display:flex;align-items:center;gap:0.7em;text-decoration:none;">
+          <img src="../Asset/logo.jpeg" alt="Alex Okorie Logo" style="height:38px;width:auto;border-radius:8px;box-shadow:0 1px 4px rgba(30,40,90,0.08);background:#fff;" />
+          <span style="font-size:1.3em;font-weight:700;color:#fff;letter-spacing:1px;">Admin Panel</span>
+        </a>
+        <div style="display:flex;align-items:center;gap:1.2em;">
+          <ul style="list-style:none;display:flex;gap:1.2em;margin:0;padding:0;">
+            <li><a href="index.html" style="color:#fff;font-weight:500;font-size:1em;padding:0.4em 1em;border-radius:6px;transition:background 0.2s;text-decoration:none;display:flex;align-items:center;gap:0.4em;"><i class="fa fa-home"></i>Dashboard</a></li>
+            <li><a href="testimonials.html" style="color:#fff;font-weight:500;font-size:1em;padding:0.4em 1em;border-radius:6px;transition:background 0.2s;text-decoration:none;display:flex;align-items:center;gap:0.4em;"><i class="fa fa-comment-dots"></i>Testimonials</a></li>
+            <li><a href="projects.html" style="color:#fff;font-weight:500;font-size:1em;padding:0.4em 1em;border-radius:6px;transition:background 0.2s;text-decoration:none;display:flex;align-items:center;gap:0.4em;"><i class="fa fa-briefcase"></i>Projects</a></li>
+          </ul>
+          <button id="logoutBtn" class="logout-btn" style="margin-left:1em;">Logout</button>
+          <button class="admin-hamburger" id="adminHamburgerBtn" aria-label="Open navigation" style="margin-left:1em;">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
-      <ul>
-        <li><a href="#slider">Homepage Slider</a></li>
-        <li><a href="testimonials.html">Testimonials</a></li>
-        <li><a href="projects.html">Projects</a></li>
-      </ul>
     </nav>
     <div id="adminNavOverlay" class="admin-nav-overlay"></div>
     <aside id="adminMobileNav" class="admin-mobile-nav">
       <div class="mobile-nav-header">
-        <h2 style="margin: 0; font-size: 1.3em">Admin Panel</h2>
-        <button
-          class="close-nav"
-          id="closeAdminNavBtn"
-          aria-label="Close navigation"
-        >
-          &times;
-        </button>
+        <a href="../index.html" class="logo-link" style="display:flex;align-items:center;gap:0.7em;text-decoration:none;">
+          <img src="../Asset/logo.jpeg" alt="Alex Okorie Logo" style="height:32px;width:auto;border-radius:8px;box-shadow:0 1px 4px rgba(30,40,90,0.08);background:#fff;" />
+          <span style="font-size:1.1em;font-weight:700;color:#fff;letter-spacing:1px;">Admin Panel</span>
+        </a>
+        <button class="close-nav" id="closeAdminNavBtn" aria-label="Close navigation">&times;</button>
       </div>
-      <ul>
-        <li><a href="index.html">Homepage Slider</a></li>
-        <li><a href="testimonials.html">Testimonials</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li>
-          <button id="logoutBtnMobile" class="logout-btn" style="width: 100%">
-            Logout
-          </button>
-        </li>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.7em;margin:1.2em 0 0 0;padding:0;">
+        <li><a href="index.html" style="color:#fff;font-weight:500;font-size:1em;padding:0.4em 1em;border-radius:6px;transition:background 0.2s;text-decoration:none;display:flex;align-items:center;gap:0.4em;"><i class="fa fa-home"></i>Dashboard</a></li>
+        <li><a href="testimonials.html" style="color:#fff;font-weight:500;font-size:1em;padding:0.4em 1em;border-radius:6px;transition:background 0.2s;text-decoration:none;display:flex;align-items:center;gap:0.4em;"><i class="fa fa-comment-dots"></i>Testimonials</a></li>
+        <li><a href="projects.html" style="color:#fff;font-weight:500;font-size:1em;padding:0.4em 1em;border-radius:6px;transition:background 0.2s;text-decoration:none;display:flex;align-items:center;gap:0.4em;"><i class="fa fa-briefcase"></i>Projects</a></li>
+        <li><button id="logoutBtnMobile" class="logout-btn" style="width: 100%;margin-top:0.7em;">Logout</button></li>
       </ul>
     </aside>
     <main>
-      <!-- Slider Images Section -->
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Welcome, Admin</h1>
+        <span class="dashboard-welcome">Manage your foundation’s content and users</span>
+      </div>
+      <div class="dashboard-cards">
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">Homepage Slider</div>
+          <div class="dashboard-card-desc">Add, edit, or remove images for the homepage slider.</div>
+          <a href="#slider" class="dashboard-card-link">Manage Slider</a>
+        </div>
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">Projects</div>
+          <div class="dashboard-card-desc">Showcase and manage foundation projects.</div>
+          <a href="projects.html" class="dashboard-card-link">Manage Projects</a>
+        </div>
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">Testimonials</div>
+          <div class="dashboard-card-desc">Add, edit, or remove testimonials from beneficiaries.</div>
+          <a href="testimonials.html" class="dashboard-card-link">Manage Testimonials</a>
+        </div>
+      </div>
       <section id="slider">
         <h3>Homepage Slider Images</h3>
         <form id="slider-upload-form" enctype="multipart/form-data">
@@ -60,7 +254,6 @@
         </form>
         <div id="slider-images-list"></div>
       </section>
-
       <!-- ...existing code... -->
     </main>
     <script src="js/auth-check.min.js"></script>
