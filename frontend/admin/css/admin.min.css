@@ -158,7 +158,7 @@ textarea {
   width: 40px;
   height: 40px;
   cursor: pointer;
-  background: none;
+  /* background: red; */
   border: none;
   position: absolute;
   right: 16px;
@@ -168,11 +168,12 @@ textarea {
 .admin-hamburger span {
   display: block;
   height: 2px;
-  margin: 4px 0;
+  margin: 2px 0;
   background: #fff;
   border-radius: 2px;
   transition: 0.3s;
 }
+
 .admin-hamburger span:first-child {
   width: 28px;
 }
@@ -199,6 +200,13 @@ textarea {
 }
 .admin-mobile-nav.active {
   display: flex;
+}
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5em 1em;
+  border-bottom: 1px solid #333;
 }
 @keyframes adminSlideInNav {
   from {
@@ -625,7 +633,7 @@ body {
     padding: 1em 0.5em 0.5em 0.5em;
   }
   .nav-header {
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: flex-start;
     gap: 0.5em;
   }
