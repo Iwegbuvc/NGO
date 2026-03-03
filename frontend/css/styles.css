@@ -244,8 +244,11 @@
   }
 }
 /* Logo styling */
-.main-logo {
-  border-radius: 50%;
+nav .logo-link img {
+  height: 50px;
+  width: auto;
+  /* border-radius: 50%; */
+  border: 2px solid red;
 }
 /* Green underline for mobile, white for desktop */
 @media (max-width: 900px) {

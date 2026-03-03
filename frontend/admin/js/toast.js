@@ -1,7 +1,7 @@
 // Toast notification system for admin panel
 // Usage: showToast('Message', 'error'|'success'|'info')
 (function () {
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.textContent = `
     .toast {
       position: fixed;
@@ -32,18 +32,18 @@
   `;
   document.head.appendChild(style);
 
-  window.showToast = function (msg, type = 'info') {
-    let toast = document.querySelector('.toast');
+  window.showToast = function (msg, type = "info") {
+    let toast = document.querySelector(".toast");
     if (!toast) {
-      toast = document.createElement('div');
-      toast.className = 'toast';
+      toast = document.createElement("div");
+      toast.className = "toast";
       document.body.appendChild(toast);
     }
     toast.textContent = msg;
-    toast.className = 'toast ' + type;
-    setTimeout(() => toast.classList.add('show'), 10);
+    toast.className = "toast " + type;
+    setTimeout(() => toast.classList.add("show"), 10);
     setTimeout(() => {
-      toast.classList.remove('show');
+      toast.classList.remove("show");
     }, 3200);
   };
 })();

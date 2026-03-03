@@ -330,7 +330,10 @@ if (sliderForm) {
     e.preventDefault();
     const formData = new FormData();
     const fileInput = sliderForm.querySelector('input[name="sliderImage"]');
-    if (!fileInput.files[0]) { showToast("Please select an image.", "error"); return; }
+    if (!fileInput.files[0]) {
+      showToast("Please select an image.", "error");
+      return;
+    }
     formData.append("image", fileInput.files[0]);
     const uploadBtn = sliderForm.querySelector('button[type="submit"]');
     let originalText = "";

@@ -3,9 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <title>Alex Okorie Foundation</title>
+    <link rel="icon" type="image/svg+xml" href="/Asset/favicon.svg" />
     <link rel="stylesheet" href="css/admin.min.css" />
     <!-- Font Awesome for eye icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
       .login-container {
         max-width: 400px;
@@ -60,26 +64,49 @@
       <h2>Admin Login</h2>
       <form id="login-form">
         <input type="email" name="email" placeholder="Email" required />
-        <div style="position: relative;">
+        <div style="position: relative">
           <input
             type="password"
             name="password"
             id="password"
             placeholder="Password"
             required
-            style="width: 100%;"
+            style="width: 100%"
           />
-          <span class="toggle-password" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888;">
+          <span
+            class="toggle-password"
+            style="
+              position: absolute;
+              right: 12px;
+              top: 50%;
+              transform: translateY(-50%);
+              cursor: pointer;
+              color: #888;
+            "
+          >
             <i class="fa fa-eye" id="togglePassword"></i>
           </span>
         </div>
         <button type="submit">Login</button>
-        <div style="margin-top: 1.2em; text-align: center;">
+        <div style="margin-top: 1.2em; text-align: center">
           <span>Don't have an account?</span>
-          <a href="register.html" style="color: #0ea5e9; text-decoration: underline; font-weight: 500; margin-left: 4px;">Register as Admin</a>
+          <a
+            href="register.html"
+            style="
+              color: #0ea5e9;
+              text-decoration: underline;
+              font-weight: 500;
+              margin-left: 4px;
+            "
+            >Register as Admin</a
+          >
         </div>
-        <div style="margin-top: 0.7em; text-align: center;">
-          <a href="forgot-password.html" style="color: #e53e3e; text-decoration: underline; font-weight: 500;">Forgot Password?</a>
+        <div style="margin-top: 0.7em; text-align: center">
+          <a
+            href="forgot-password.html"
+            style="color: #e53e3e; text-decoration: underline; font-weight: 500"
+            >Forgot Password?</a
+          >
         </div>
       </form>
       <div id="login-error" class="login-error"></div>
@@ -88,13 +115,16 @@
     <script src="js/toast.js"></script>
     <script>
       // Password show/hide toggle
-      const togglePassword = document.getElementById('togglePassword');
-      const passwordInput = document.getElementById('password');
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("password");
       if (togglePassword && passwordInput) {
-        togglePassword.addEventListener('click', function () {
-          const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-          passwordInput.setAttribute('type', type);
-          this.classList.toggle('fa-eye-slash');
+        togglePassword.addEventListener("click", function () {
+          const type =
+            passwordInput.getAttribute("type") === "password"
+              ? "text"
+              : "password";
+          passwordInput.setAttribute("type", type);
+          this.classList.toggle("fa-eye-slash");
         });
       }
     </script>
