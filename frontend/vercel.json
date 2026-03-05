@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/about", "destination": "/about/index.html" },
+    { "source": "/projects", "destination": "/projects/index.html" },
+    { "source": "/contact", "destination": "/contact/index.html" },
+    { "source": "/admin/login", "destination": "/admin/login/index.html" },
+    { "source": "/admin/projects", "destination": "/admin/projects/index.html" },
+    { "source": "/admin/testimonials", "destination": "/admin/testimonials/index.html" },
+    { "source": "/admin/register", "destination": "/admin/register/index.html" },
+    { "source": "/admin/reset-password", "destination": "/admin/reset-password/index.html" },
+    { "source": "/admin/forgot-password", "destination": "/admin/forgot-password/index.html" }
+  ]
+}

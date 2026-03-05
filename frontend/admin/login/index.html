@@ -105,7 +105,7 @@
         <div style="margin-top: 1.2em; text-align: center">
           <span>Don't have an account?</span>
           <a
-            href="../register/index.html"
+            href="../register/"
             style="
               color: #0ea5e9;
               text-decoration: underline;
@@ -117,7 +117,7 @@
         </div>
         <div style="margin-top: 0.7em; text-align: center">
           <a
-            href="../forgot-password/index.html"
+            href="../forgot-password/"
             style="color: #e53e3e; text-decoration: underline; font-weight: 500"
             >Forgot Password?</a
           >
@@ -167,14 +167,14 @@
               );
               if (res.ok) {
                 const data = await res.json();
-                console.log('Login response:', data); // Debug: show response data
+                console.log("Login response:", data); // Debug: show response data
                 if (data.token) {
                   localStorage.setItem("token", data.token);
                 }
                 messageDiv.style.color = "#17843b";
                 messageDiv.textContent = "Login successful!";
                 setTimeout(function () {
-                  window.location.href = "../index.html";
+                  window.location.href = "../dashboard/";
                 }, 800);
               } else {
                 const data = await res.json();
