@@ -21,7 +21,12 @@ if (loginForm) {
       const data = await res.json();
       if (res.ok && data.token) {
         localStorage.setItem("token", data.token);
-        window.location.href = "index.html";
+          // Show success message, then redirect after short delay
+          loginError.style.color = "green";
+          loginError.textContent = "Login successful! Redirecting...";
+          setTimeout(function() {
+            window.location.href = "index.html";
+          }, 800); // 800ms delay for mobile reliability
       } else {
         loginError.textContent = data.message || "Login failed";
       }

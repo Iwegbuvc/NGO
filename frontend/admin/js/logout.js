@@ -15,6 +15,6 @@ if (logoutBtn) {
         credentials: "include",
       });
     } catch (e) {}
-    window.location.href = "login.html";
+    window.location.href = "/admin/login/index.html";
   };
 }

@@ -271,11 +271,11 @@ async function refreshAccessToken() {
     }
     // If refresh fails, force logout
     localStorage.removeItem("token");
-    window.location.href = "login.html";
+    window.location.href = "login/index.html";
     return null;
   } catch (err) {
     localStorage.removeItem("token");
-    window.location.href = "login.html";
+    window.location.href = "login/index.html";
     return null;
   }
 }
@@ -298,7 +298,7 @@ async function authFetch(url, options = {}) {
   return res;
 }
 if (!localStorage.getItem("token")) {
-  window.location.href = "login.html";
+  window.location.href = "login/index.html";
 }
 
 // ========== SLIDER IMAGES ADMIN ========== //

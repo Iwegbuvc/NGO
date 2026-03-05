@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (logoutBtnMobile) {
     logoutBtnMobile.onclick = function () {
       localStorage.removeItem("token");
-      window.location.href = "login.html";
+      window.location.href = "/admin/login/index.html";
     };
   }
 });

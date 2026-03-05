@@ -20,11 +20,11 @@ async function refreshAccessToken() {
       }
     }
     localStorage.removeItem("token");
-    window.location.href = "login.html";
+    window.location.href = "../login/index.html";
     return null;
   } catch (err) {
     localStorage.removeItem("token");
-    window.location.href = "login.html";
+    window.location.href = "../login/index.html";
     return null;
   }
 }

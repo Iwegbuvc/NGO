@@ -2,9 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alex Okorie Foundation</title>
-    <link rel="icon" type="image/svg+xml" href="/Asset/favicon.svg" />
-    <link rel="stylesheet" href="css/admin.min.css" />
+    <link rel="icon" type="image/svg+xml" href="../../Asset/favicon.svg" />
+    <link rel="stylesheet" href="../css/admin.min.css" />
     <!-- Font Awesome for eye icon -->
     <link
       rel="stylesheet"
@@ -22,6 +23,7 @@
         flex-direction: column;
         gap: 1.5em;
       }
+
       .login-container h2 {
         text-align: center;
         margin-bottom: 1em;
@@ -60,10 +62,18 @@
     </style>
   </head>
   <body>
+    <!-- <script src="../js/auth-check.min.js"></script> -->
+    <!-- Removed duplicate auth-check.min.js script -->
     <div class="login-container">
       <h2>Admin Login</h2>
       <form id="login-form">
-        <input type="email" name="email" placeholder="Email" required style="width:100%;box-sizing:border-box;" />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          required
+          style="width: 100%; box-sizing: border-box"
+        />
         <div style="position: relative">
           <input
             type="password"
@@ -71,7 +81,7 @@
             id="password"
             placeholder="Password"
             required
-            style="width: 100%;box-sizing:border-box;"
+            style="width: 100%; box-sizing: border-box"
           />
           <span
             class="toggle-password"
@@ -88,11 +98,14 @@
           </span>
         </div>
         <button type="submit" id="login-btn">Login</button>
-          <div id="login-message" style="margin-top:0.5em;text-align:center;font-size:1em;"></div>
+        <div
+          id="login-message"
+          style="margin-top: 0.5em; text-align: center; font-size: 1em"
+        ></div>
         <div style="margin-top: 1.2em; text-align: center">
           <span>Don't have an account?</span>
           <a
-            href="register.html"
+            href="../register/index.html"
             style="
               color: #0ea5e9;
               text-decoration: underline;
@@ -104,7 +117,7 @@
         </div>
         <div style="margin-top: 0.7em; text-align: center">
           <a
-            href="forgot-password.html"
+            href="../forgot-password/index.html"
             style="color: #e53e3e; text-decoration: underline; font-weight: 500"
             >Forgot Password?</a
           >
@@ -112,8 +125,8 @@
       </form>
       <div id="login-error" class="login-error"></div>
     </div>
-    <script src="js/login.min.js"></script>
-    <script src="js/toast.js"></script>
+    <!-- <script src="../js/login.min.js"></script> -->
+    <script src="../js/toast.js"></script>
     <script>
       // Password show/hide toggle
       const togglePassword = document.getElementById("togglePassword");
@@ -128,41 +141,55 @@
           this.classList.toggle("fa-eye-slash");
         });
       }
-    </script>
-  </body>
-    <script>
-      document.getElementById('login-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('login-btn');
-        const messageDiv = document.getElementById('login-message');
-        btn.disabled = true;
-        const originalText = btn.textContent;
-        btn.textContent = 'Logging in...';
-        messageDiv.textContent = '';
-        // Example payload, update endpoint and payload as needed
-        const email = this.email.value.trim();
-        const password = this.password.value;
-        try {
-          const res = await fetch('https://alexokoriengobe.onrender.com/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
+
+      // Login form submit handler
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginForm = document.getElementById("login-form");
+        if (loginForm) {
+          loginForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const btn = document.getElementById("login-btn");
+            const messageDiv = document.getElementById("login-message");
+            btn.disabled = true;
+            const originalText = btn.textContent;
+            btn.textContent = "Logging in...";
+            messageDiv.textContent = "";
+            const email = this.email.value.trim();
+            const password = this.password.value;
+            try {
+              const res = await fetch(
+                "https://alexokoriengobe.onrender.com/api/auth/login",
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ email, password }),
+                },
+              );
+              if (res.ok) {
+                const data = await res.json();
+                console.log('Login response:', data); // Debug: show response data
+                if (data.token) {
+                  localStorage.setItem("token", data.token);
+                }
+                messageDiv.style.color = "#17843b";
+                messageDiv.textContent = "Login successful!";
+                setTimeout(function () {
+                  window.location.href = "../index.html";
+                }, 800);
+              } else {
+                const data = await res.json();
+                messageDiv.style.color = "#e53e3e";
+                messageDiv.textContent = data.message || "Login failed.";
+              }
+            } catch (err) {
+              messageDiv.style.color = "#e53e3e";
+              messageDiv.textContent = "Network error. Please try again.";
+            }
+            btn.disabled = false;
+            btn.textContent = originalText;
           });
-          if (res.ok) {
-            messageDiv.style.color = '#17843b';
-            messageDiv.textContent = 'Login successful!';
-            // Redirect or further logic here
-          } else {
-            const data = await res.json();
-            messageDiv.style.color = '#e53e3e';
-            messageDiv.textContent = data.message || 'Login failed.';
-          }
-        } catch (err) {
-          messageDiv.style.color = '#e53e3e';
-          messageDiv.textContent = 'Network error. Please try again.';
         }
-        btn.disabled = false;
-        btn.textContent = originalText;
       });
     </script>
+  </body>
 </html>

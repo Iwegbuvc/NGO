@@ -1,9 +1,10 @@
-<!-- Delete Testimonial Modal -->
-<div id="deleteTestiModal" class="modal" style="display: none">
+<!-- Edit Project Modal -->
+<!-- Delete Confirmation Modal -->
+<div id="deleteProjectModal" class="modal" style="display: none">
   <div class="modal-content" style="max-width: 340px">
-    <span class="close-modal" id="closeDeleteTestiModal">&times;</span>
-    <h3>Delete Testimonial</h3>
-    <p>Are you sure you want to delete this testimonial?</p>
+    <span class="close-modal" id="closeDeleteModal">&times;</span>
+    <h3>Delete Project</h3>
+    <p>Are you sure you want to delete this project?</p>
     <div
       style="
         display: flex;
@@ -12,16 +13,74 @@
         margin-top: 1.5em;
       "
     >
-      <button id="cancelDeleteTestiBtn" style="background: #888">Cancel</button>
-      <button id="confirmDeleteTestiBtn" style="background: #e53e3e">
-        Delete
-      </button>
+      <button id="cancelDeleteBtn" style="background: #888">Cancel</button>
+      <button id="confirmDeleteBtn" style="background: #e53e3e">Delete</button>
     </div>
+  </div>
+</div>
+<div id="editProjectModal" class="modal" style="display: none">
+  <div class="modal-content">
+    <span class="close-modal" id="closeEditModal">&times;</span>
+    <h3>Edit Project</h3>
+    <form id="edit-project-form">
+      <input
+        type="text"
+        name="editLocation"
+        id="editLocation"
+        placeholder="Location"
+        required
+      />
+      <textarea
+        name="editDescription"
+        id="editDescription"
+        placeholder="Description"
+        required
+      ></textarea>
+      <textarea
+        name="editText"
+        id="editText"
+        placeholder="Title/Text"
+        required
+      ></textarea>
+      <button type="submit">Save Changes</button>
+    </form>
   </div>
 </div>
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      /* @media (max-width: 900px) {
+        .nav-header .logout-btn {
+          display: none !important;
+        }
+      } */
+    </style>
+    <style>
+      /* .admin-hamburger {
+                    background: none;
+                    border: none;
+                    outline: none;
+                    display: inline-flex !important;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 40px;
+                    height: 40px;
+                    cursor: pointer;
+                    z-index: 1201;
+                    padding: 6px;
+                  }
+                  .admin-hamburger span {
+                    background: #fff !important;
+                    height: 3px !important;
+                    width: 28px !important;
+                    display: block !important;
+                    margin: 5px 0 !important;
+                    border-radius: 2px;
+                    transition: 0.3s;
+                  } */
+    </style>
     <style>
       /* .admin-hamburger span {
                 background: #fff !important;
@@ -31,8 +90,8 @@
                 margin: 5px 0;
                 border-radius: 2px;
                 transition: 0.3s;
-              } */
-      /* .admin-hamburger {
+              }
+              .admin-hamburger {
                 background: none;
                 border: none;
                 outline: none;
@@ -45,47 +104,24 @@
                 cursor: pointer;
               } */
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Hamburger menu toggle
-        const hamburger = document.getElementById("adminHamburgerBtn");
-        const mobileNav = document.getElementById("adminMobileNav");
-        const navOverlay = document.getElementById("adminNavOverlay");
-        const closeBtn = document.getElementById("closeAdminNavBtn");
-        function openMobileNav() {
-          mobileNav.classList.add("active");
-          navOverlay.classList.add("active");
-        }
-        function closeMobileNav() {
-          mobileNav.classList.remove("active");
-          navOverlay.classList.remove("active");
-        }
-        hamburger.addEventListener("click", openMobileNav);
-        closeBtn.addEventListener("click", closeMobileNav);
-        navOverlay.addEventListener("click", closeMobileNav);
-        // Responsive nav: hide desktop links on small screens
-        function handleResize() {
-          const navLinks = document.querySelector(".nav-header ul");
-          if (window.innerWidth <= 900) {
-            if (navLinks) navLinks.style.display = "none";
-            hamburger.style.display = "inline-flex";
-          } else {
-            if (navLinks) navLinks.style.display = "flex";
-            hamburger.style.display = "none";
-            closeMobileNav();
-          }
-        }
-        window.addEventListener("resize", handleResize);
-        handleResize();
-      });
+    
+     
     </script>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alex Okorie Foundation</title>
-    <link rel="icon" type="image/svg+xml" href="/Asset/favicon.svg" />
-    <link rel="stylesheet" href="css/admin.min.css" />
+    <link rel="stylesheet" href="../css/admin.min.css" />
+    <link rel="icon" type="image/svg+xml" href="../../Asset/favicon.svg" />
   </head>
   <body>
+    <script>
+      // Patch: Ensure correct login redirect
+      window.redirectToLogin = function() {
+        window.location.href = "../login/index.html";
+      };
+    </script>
+    <script src="../js/auth-check.min.js"></script>
+    <!-- Removed duplicate auth-check.min.js script -->
     <style>
       @media (max-width: 900px) {
         .nav-header ul {
@@ -111,7 +147,7 @@
         main {
           padding: 0.5em;
         }
-        .testimonial-card {
+        .project-card {
           padding: 1em 0.7em;
         }
       }
@@ -133,6 +169,7 @@
           justify-content: space-between;
           max-width: 1200px;
           margin: 0 auto;
+          position: relative;
         "
       >
         <a
@@ -146,7 +183,7 @@
           "
         >
           <img
-            src="../Asset/logo.jpeg"
+            src="../../Asset/logo.jpeg"
             alt="Alex Okorie Logo"
             style="
               height: 38px;
@@ -178,7 +215,7 @@
           >
             <li>
               <a
-                href="index.html"
+                href="../index.html"
                 style="
                   color: #fff;
                   font-weight: 500;
@@ -196,7 +233,7 @@
             </li>
             <li>
               <a
-                href="testimonials.html"
+                href="../testimonials/index.html"
                 style="
                   color: #fff;
                   font-weight: 500;
@@ -214,7 +251,7 @@
             </li>
             <li>
               <a
-                href="projects.html"
+                href="../projects/index.html"
                 style="
                   color: #fff;
                   font-weight: 500;
@@ -238,7 +275,6 @@
             class="admin-hamburger"
             id="adminHamburgerBtn"
             aria-label="Open navigation"
-            style="margin-left: 1em"
           >
             <span></span>
             <span></span>
@@ -261,7 +297,7 @@
           "
         >
           <img
-            src="../Asset/logo.jpeg"
+            src="../../Asset/logo.jpeg"
             alt="Alex Okorie Logo"
             style="
               height: 32px;
@@ -301,7 +337,7 @@
       >
         <li>
           <a
-            href="index.html"
+            href="../index.html"
             style="
               color: #fff;
               font-weight: 500;
@@ -319,7 +355,7 @@
         </li>
         <li>
           <a
-            href="testimonials.html"
+            href="../testimonials/index.html"
             style="
               color: #fff;
               font-weight: 500;
@@ -337,7 +373,7 @@
         </li>
         <li>
           <a
-            href="projects.html"
+            href="../projects/index.html"
             style="
               color: #fff;
               font-weight: 500;
@@ -353,7 +389,6 @@
             ><i class="fa fa-briefcase"></i>Projects</a
           >
         </li>
-        <li>
           <button
             id="logoutBtnMobile"
             class="logout-btn"
@@ -361,59 +396,37 @@
           >
             Logout
           </button>
-        </li>
       </ul>
     </aside>
     <main>
-      <section id="testimonials">
-        <h3>Manage Testimonials</h3>
-        <form id="testimonial-form" enctype="multipart/form-data">
-          <input type="file" name="userImage" accept="image/*" />
-          <input type="text" name="name" placeholder="User Name" required />
+      <section id="projects">
+        <h3>Manage Projects</h3>
+        <form id="project-form" enctype="multipart/form-data">
+          <input
+            type="file"
+            name="projectImages"
+            accept="image/*"
+            multiple
+            required
+          />
           <input type="text" name="location" placeholder="Location" required />
-          <textarea name="text" placeholder="Testimonial" required></textarea>
-          <button type="submit">Add Testimonial</button>
+
+          <input type="text" name="text" placeholder="Heading/Title" required />
+          <textarea
+            name="description"
+            placeholder="Description"
+            required
+          ></textarea>
+          <button type="submit">Add Project</button>
         </form>
-        <div id="testimonials-list"></div>
-        <div id="testimonials-pagination" class="pagination"></div>
+        <div id="projects-list"></div>
+        <div id="projects-pagination" class="pagination"></div>
       </section>
-      <!-- Edit Testimonial Modal -->
-      <div id="editTestiModal" class="modal" style="display: none">
-        <div class="modal-content">
-          <span id="closeEditTestiModal" class="close">&times;</span>
-          <h3>Edit Testimonial</h3>
-          <form id="edit-testimonial-form">
-            <input type="hidden" name="_id" id="editTestiId" />
-            <input type="file" name="userImage" accept="image/*" />
-            <input
-              type="text"
-              name="name"
-              id="editTestiName"
-              placeholder="User Name"
-              required
-            />
-            <input
-              type="text"
-              name="location"
-              id="editTestiLocation"
-              placeholder="Location"
-              required
-            />
-            <textarea
-              name="text"
-              id="editTestiText"
-              placeholder="Testimonial"
-              required
-            ></textarea>
-            <button type="submit">Save Changes</button>
-          </form>
-        </div>
-      </div>
     </main>
-    <script src="js/auth-check.min.js"></script>
-    <script src="js/toast.min.js"></script>
-    <script src="js/logout.min.js"></script>
-    <script src="js/admin-nav.min.js"></script>
-    <script src="js/admin.min.js"></script>
+    <script src="../js/auth-check.min.js"></script>
+    <script src="../js/toast.min.js"></script>
+    <script src="../js/logout.min.js"></script>
+    <script src="../js/admin-nav.min.js"></script>
+    <script src="../js/admin.min.js"></script>
   </body>
 </html>

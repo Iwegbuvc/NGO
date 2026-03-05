@@ -7,9 +7,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alex Okorie Foundation</title>
-    <link rel="icon" type="image/svg+xml" href="/Asset/favicon.svg" />
-    <link rel="stylesheet" href="css/admin.min.css" />
+    <link rel="icon" type="image/svg+xml" href="../Asset/favicon.svg" />
+    <link rel="stylesheet" href="../css/admin.min.css" />
     <style>
       .register-container {
         max-width: 400px;
@@ -65,6 +66,8 @@
     </style>
   </head>
   <body>
+    <script src="../js/auth-check.min.js"></script>
+    <!-- Removed duplicate auth-check.min.js script -->
     <div class="register-container">
       <h2>Admin Registration</h2>
       <form id="register-form">
@@ -116,7 +119,10 @@
           </span>
         </div>
         <button type="submit" id="register-btn">Register</button>
-        <div id="register-message" style="margin-top:0.5em;text-align:center;font-size:1em;"></div>
+        <div
+          id="register-message"
+          style="margin-top: 0.5em; text-align: center; font-size: 1em"
+        ></div>
       </form>
       <div
         id="register-message"
@@ -125,7 +131,7 @@
       <div style="margin-top: 1.2em; text-align: center">
         <span>Already have an account?</span>
         <a
-          href="login.html"
+          href="../login/index.html"
           style="
             color: #0ea5e9;
             text-decoration: underline;
@@ -137,7 +143,7 @@
       </div>
       <!-- Removed unused error/success divs -->
     </div>
-    <script src="js/toast.js"></script>
+    <script src="../js/toast.js"></script>
     <script>
       // Password visibility toggle
       document.addEventListener("DOMContentLoaded", function () {
@@ -194,40 +200,45 @@
       });
     </script>
   </body>
-    <script>
-      document.getElementById('register-form').addEventListener('submit', async function(e) {
+  <script>
+    document
+      .getElementById("register-form")
+      .addEventListener("submit", async function (e) {
         e.preventDefault();
-        const btn = document.getElementById('register-btn');
-        const messageDiv = document.getElementById('register-message');
+        const btn = document.getElementById("register-btn");
+        const messageDiv = document.getElementById("register-message");
         btn.disabled = true;
         const originalText = btn.textContent;
-        btn.textContent = 'Registering...';
-        messageDiv.textContent = '';
+        btn.textContent = "Registering...";
+        messageDiv.textContent = "";
         // Example payload, update endpoint and payload as needed
         const name = this.name.value.trim();
         const email = this.email.value.trim();
         const password = this.password.value;
         try {
-          const res = await fetch('https://alexokoriengobe.onrender.com/api/auth/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, password })
-          });
+          const res = await fetch(
+            "https://alexokoriengobe.onrender.com/api/auth/register",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ name, email, password }),
+            },
+          );
           if (res.ok) {
-            messageDiv.style.color = '#17843b';
-            messageDiv.textContent = 'Registration successful!';
+            messageDiv.style.color = "#17843b";
+            messageDiv.textContent = "Registration successful!";
             // Redirect or further logic here
           } else {
             const data = await res.json();
-            messageDiv.style.color = '#e53e3e';
-            messageDiv.textContent = data.message || 'Registration failed.';
+            messageDiv.style.color = "#e53e3e";
+            messageDiv.textContent = data.message || "Registration failed.";
           }
         } catch (err) {
-          messageDiv.style.color = '#e53e3e';
-          messageDiv.textContent = 'Network error. Please try again.';
+          messageDiv.style.color = "#e53e3e";
+          messageDiv.textContent = "Network error. Please try again.";
         }
         btn.disabled = false;
         btn.textContent = originalText;
       });
-    </script>
+  </script>
 </html>
