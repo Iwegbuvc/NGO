@@ -158,39 +158,6 @@
         .dashboard-header {
           flex-direction: column;
           align-items: flex-start;
-          gap: 0.7em;
-        }
-        .dashboard-title {
-          font-size: 1.5em;
-        }
-        .dashboard-cards {
-          flex-direction: column;
-          gap: 1em;
-        }
-        .nav-header ul {
-          display: none !important;
-        }
-        .admin-hamburger {
-          display: inline-flex !important;
-        }
-        .admin-mobile-nav {
-          display: none;
-        }
-        .admin-mobile-nav.active {
-          display: flex;
-        }
-        .admin-nav-overlay {
-          display: none;
-        }
-        .admin-nav-overlay.active {
-          display: block;
-        }
-      }
-      @media (max-width: 600px) {
-        main {
-          padding: 0.5em;
-        }
-        .dashboard-header {
           padding: 1em 0 0.5em 0;
         }
         .dashboard-title {
@@ -201,6 +168,7 @@
         }
       }
     </style>
+
     <nav
       class="admin-nav"
       style="
@@ -490,11 +458,71 @@
         <div id="slider-images-list"></div>
       </section>
       <!-- ...existing code... -->
+      <section class="admin-stats-section">
+        <h2>Manage Stats Section</h2>
+        <div id="admin-stats-list"></div>
+        <button id="addStatBtn">Add Stat</button>
+        <div
+          id="statFormModal"
+          style="
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <form
+            id="statForm"
+            style="
+              background: #fff;
+              padding: 20px;
+              border-radius: 8px;
+              min-width: 300px;
+            "
+          >
+            <h3 id="statFormTitle">Add/Edit Stat</h3>
+            <label
+              >Icon:
+              <select name="icon" required>
+                <option value="fa-user">User</option>
+                <option value="fa-star">Star</option>
+                <option value="fa-heart">Heart</option>
+                <option value="fa-chart-bar">Chart Bar</option>
+                <option value="fa-leaf">Leaf</option>
+                <option value="fa-globe">Globe</option>
+                <option value="fa-hands-helping">Hands Helping</option>
+                <option value="fa-graduation-cap">Graduation Cap</option>
+                <option value="fa-briefcase">Briefcase</option>
+                <option value="fa-comments">Comments</option>
+                <option value="fa-map-pin">Map Pin</option>
+                <option value="fa-thumbtack">Thumbtack</option>
+                <option value="fa-money-bill">Money Bill</option>
+                <option value="fa-coins">Coins</option>
+              </select>
+            </label>
+            <br />
+
+            <label>Number: <input name="number" required /></label><br />
+            <label>Label: <input name="label" required /></label><br />
+            <input type="hidden" name="_id" />
+            <button type="submit">Save</button>
+            <button type="button" id="closeStatForm">Cancel</button>
+          </form>
+        </div>
+      </section>
+      <script src="../js/admin.js"></script>
+      <!-- ...existing code... -->
     </main>
     <script src="../js/auth-check.min.js"></script>
     <script src="../js/toast.min.js"></script>
     <script src="../js/logout.min.js"></script>
     <script src="../js/admin-nav.min.js"></script>
-    <script src="../js/admin.min.js"></script>
+    <!-- Removed duplicate admin.min.js to fix variable redeclaration error -->
+    <!-- <script src="../js/admin.min.js"></script> -->
   </body>
 </html>

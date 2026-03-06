@@ -1,255 +1,3 @@
-// ========== TESTIMONIALS SECTION WITH PAGINATION ========== //
-const TESTI_API_BASE = "https://alexokoriengobe.onrender.com/api/testimonials";
-let testiPage = 1;
-const testiLimit = 5;
-
-// Load all testimonials (paginated)
-async function loadTestimonials(page = 1) {
-  const res = await authFetch(
-    `${TESTI_API_BASE}/getAllTesti?page=${page}&limit=${testiLimit}`,
-  );
-  const data = await res.json();
-  const testimonials = data.testimonials || [];
-  const totalPages = data.totalPages || 1;
-  const list = document.getElementById("testimonials-list");
-  if (!list) return;
-  list.innerHTML = "";
-  (data.testimonials || []).forEach((testi) => {
-    const el = document.createElement("div");
-    el.className = "testimonial-card";
-    el.innerHTML = `
-        <img src="${testi.userImage}" alt="User" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
-        <div class="testimonial-content">
-          <div class="testimonial-text">${testi.text}</div>
-          <div class="testimonial-meta">
-            <span class="testimonial-name">${testi.name}</span> |
-            <span class="testimonial-location">${testi.location}</span>
-          </div>
-          <div class="testimonial-actions">
-            <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
-          </div>
-        </div>
-      `;
-    el.querySelector(".delete-btn").onclick = () =>
-      showDeleteTestiModal(testi._id);
-    el.querySelector(".edit-btn").onclick = () => openEditTestiModal(testi);
-    list.appendChild(el);
-  });
-  // ========== Delete Testimonial Modal Logic (Global) ==========
-  const deleteTestiModal = document.getElementById("deleteTestiModal");
-  const closeDeleteTestiModalBtn = document.getElementById(
-    "closeDeleteTestiModal",
-  );
-  const cancelDeleteTestiBtn = document.getElementById("cancelDeleteTestiBtn");
-  const confirmDeleteTestiBtn = document.getElementById(
-    "confirmDeleteTestiBtn",
-  );
-  let deletingTestiId = null;
-
-  function showDeleteTestiModal(testiId) {
-    deletingTestiId = testiId;
-    if (deleteTestiModal) deleteTestiModal.style.display = "flex";
-  }
-
-  if (closeDeleteTestiModalBtn) {
-    closeDeleteTestiModalBtn.onclick = () => {
-      deleteTestiModal.style.display = "none";
-      deletingTestiId = null;
-    };
-  }
-  if (cancelDeleteTestiBtn) {
-    cancelDeleteTestiBtn.onclick = () => {
-      deleteTestiModal.style.display = "none";
-      deletingTestiId = null;
-    };
-  }
-  if (confirmDeleteTestiBtn) {
-    confirmDeleteTestiBtn.onclick = async () => {
-      if (!deletingTestiId) return;
-      try {
-        const response = await authFetch(
-          `${TESTI_API_BASE}/delete/${deletingTestiId}`,
-          {
-            method: "DELETE",
-          },
-        );
-        if (!response.ok) throw new Error("Failed to delete testimonial");
-        deleteTestiModal.style.display = "none";
-        deletingTestiId = null;
-        loadTestimonials(testiPage);
-      } catch (err) {
-        showToast("Delete failed. Please try again.", "error");
-      }
-    };
-  }
-
-  // ========== Edit Testimonial Modal Logic (Global) ==========
-  const editTestiModal = document.getElementById("editTestiModal");
-  const closeEditTestiModalBtn = document.getElementById("closeEditTestiModal");
-  const editTestimonialForm = document.getElementById("edit-testimonial-form");
-  let editingTestiId = null;
-
-  function openEditTestiModal(testi) {
-    if (!editTestiModal || !editTestimonialForm) return;
-    editingTestiId = testi._id;
-    document.getElementById("editTestiId").value = testi._id;
-    document.getElementById("editTestiName").value = testi.name;
-    document.getElementById("editTestiLocation").value = testi.location;
-    document.getElementById("editTestiText").value = testi.text;
-    editTestiModal.style.display = "flex";
-  }
-
-  if (closeEditTestiModalBtn) {
-    closeEditTestiModalBtn.onclick = () => {
-      editTestiModal.style.display = "none";
-      editingTestiId = null;
-    };
-  }
-
-  if (editTestiModal) {
-    window.addEventListener("click", function (event) {
-      if (event.target === editTestiModal) {
-        editTestiModal.style.display = "none";
-        editingTestiId = null;
-      }
-    });
-  }
-
-  if (editTestimonialForm) {
-    editTestimonialForm.onsubmit = async function (e) {
-      e.preventDefault();
-      if (!editingTestiId) return;
-      const name = document.getElementById("editTestiName").value;
-      const location = document.getElementById("editTestiLocation").value;
-      const text = document.getElementById("editTestiText").value;
-      const userImageInput = editTestimonialForm.querySelector(
-        'input[name="userImage"]',
-      );
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("location", location);
-      formData.append("text", text);
-      if (userImageInput && userImageInput.files[0]) {
-        formData.append("userImage", userImageInput.files[0]);
-      }
-      const saveBtn = editTestimonialForm.querySelector(
-        'button[type="submit"]',
-      );
-      let originalText = "";
-      if (saveBtn) {
-        originalText = saveBtn.textContent;
-        saveBtn.disabled = true;
-        saveBtn.textContent = "Uploading...";
-        // Force reflow to ensure text updates immediately
-        saveBtn.offsetWidth;
-      }
-      try {
-        const response = await authFetch(
-          `${TESTI_API_BASE}/edit/${editingTestiId}`,
-          {
-            method: "PUT",
-            body: formData,
-          },
-        );
-        if (!response.ok) throw new Error("Failed to update testimonial");
-        editTestiModal.style.display = "none";
-        editingTestiId = null;
-        loadTestimonials(testiPage);
-      } catch (err) {
-        showToast("Update failed. Please try again.", "error");
-      } finally {
-        if (saveBtn) {
-          saveBtn.disabled = false;
-          saveBtn.textContent = originalText || "Save Changes";
-        }
-      }
-    };
-  }
-  renderTestiPagination(totalPages, page);
-}
-
-function renderTestiPagination(totalPages, currentPage) {
-  let container = document.getElementById("testimonials-pagination");
-  if (!container) {
-    container = document.createElement("div");
-    container.id = "testimonials-pagination";
-    container.className = "pagination";
-    document.getElementById("testimonials-list").after(container);
-  }
-  container.innerHTML = "";
-  if (totalPages <= 1) return;
-
-  // Prev arrow
-  const prevBtn = document.createElement("button");
-  prevBtn.innerHTML = "&#8592;";
-  prevBtn.disabled = currentPage === 1;
-  prevBtn.onclick = () => {
-    if (currentPage > 1) {
-      testiPage = currentPage - 1;
-      loadTestimonials(testiPage);
-    }
-  };
-  container.appendChild(prevBtn);
-
-  // Page numbers
-  for (let i = 1; i <= totalPages; i++) {
-    const btn = document.createElement("button");
-    btn.textContent = i;
-    btn.className = i === currentPage ? "active" : "";
-    btn.onclick = () => {
-      testiPage = i;
-      loadTestimonials(i);
-    };
-    container.appendChild(btn);
-  }
-
-  // Next arrow
-  const nextBtn = document.createElement("button");
-  nextBtn.innerHTML = "&#8594;";
-  nextBtn.disabled = currentPage === totalPages;
-  nextBtn.onclick = () => {
-    if (currentPage < totalPages) {
-      testiPage = currentPage + 1;
-      loadTestimonials(testiPage);
-    }
-  };
-  container.appendChild(nextBtn);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.getElementById("testimonials-list")) loadTestimonials();
-});
-
-// Add testimonial
-const testimonialForm = document.getElementById("testimonial-form");
-if (testimonialForm) {
-  const addBtn = testimonialForm.querySelector('button[type="submit"]');
-  testimonialForm.onsubmit = async function (e) {
-    e.preventDefault();
-    if (addBtn) {
-      addBtn.disabled = true;
-      const originalText = addBtn.textContent;
-      addBtn.textContent = "Uploading...";
-    }
-    const formData = new FormData(this);
-    try {
-      await authFetch(`${TESTI_API_BASE}/addTesti`, {
-        method: "POST",
-        body: formData,
-      });
-      this.reset();
-      loadTestimonials(1);
-    } catch (err) {
-      showToast("Upload failed. Please try again.", "error");
-    } finally {
-      if (addBtn) {
-        addBtn.disabled = false;
-        addBtn.textContent = "Add Testimonial";
-      }
-    }
-  };
-}
 // ========== AUTH CHECK ========== //
 // --- Token Refresh Logic ---
 async function refreshAccessToken() {
@@ -300,6 +48,155 @@ async function authFetch(url, options = {}) {
 if (!localStorage.getItem("token")) {
   window.location.href = "login/index.html";
 }
+
+// ========== TESTIMONIALS SECTION WITH PAGINATION ========== //
+// ========== ADMIN STATS MANAGEMENT ========== //
+const STATS_API_BASE = "https://alexokoriengobe.onrender.com/api/stats";
+const STATS_GET_URL = STATS_API_BASE + "/getStats";
+const STATS_ADD_URL = STATS_API_BASE + "/addStat";
+const STATS_UPDATE_URL = STATS_API_BASE + "/updateStat";
+const STATS_DELETE_URL = STATS_API_BASE + "/deleteStat";
+
+async function fetchStats() {
+  const res = await authFetch(STATS_GET_URL);
+  return await res.json();
+}
+
+let deletingStatId = null;
+
+function showDeleteStatModal(statId) {
+  deletingStatId = statId;
+  const modal = document.getElementById("deleteStatModal");
+  if (modal) modal.style.display = "flex";
+}
+
+function hideDeleteStatModal() {
+  const modal = document.getElementById("deleteStatModal");
+  if (modal) modal.style.display = "none";
+  deletingStatId = null;
+}
+
+async function deleteStatConfirmed() {
+  if (!deletingStatId) return;
+  const res = await authFetch(`${STATS_DELETE_URL}/${deletingStatId}`, {
+    method: "DELETE",
+  });
+  if (res.ok) {
+    hideDeleteStatModal();
+    loadStats();
+    if (typeof showToast === "function") showToast("Stat deleted successfully", "success");
+  } else {
+    hideDeleteStatModal();
+    if (typeof showToast === "function") showToast("Error deleting stat", "error");
+  }
+}
+
+function renderStats(stats) {
+  const list = document.getElementById("admin-stats-list");
+  if (!list) return;
+  list.innerHTML = "";
+  stats.forEach((stat) => {
+    const card = document.createElement("div");
+    card.className = "admin-stat-card";
+    card.innerHTML = `
+      <span class="stat-icon"><i class="fa ${stat.icon}"></i></span>
+      <span class="stat-number">${stat.number}</span>
+      <span class="stat-label">${stat.label}</span>
+      <button class="edit-stat-btn">Edit</button>
+      <button class="delete-stat-btn">Delete</button>
+    `;
+    card.querySelector(".edit-stat-btn").onclick = () => openStatForm(stat);
+    card.querySelector(".delete-stat-btn").onclick = () => showDeleteStatModal(stat._id);
+    list.appendChild(card);
+  });
+}
+
+async function loadStats() {
+  const stats = await fetchStats();
+  renderStats(stats);
+}
+
+function openStatForm(stat = {}) {
+  document.getElementById("statFormModal").style.display = "flex";
+  document.getElementById("statFormTitle").textContent = stat._id
+    ? "Edit Stat"
+    : "Add Stat";
+  const form = document.getElementById("statForm");
+  form.icon.value = stat.icon || "";
+  form.number.value = stat.number || "";
+  form.label.value = stat.label || "";
+  form._id.value = stat._id || "";
+}
+
+document.getElementById("addStatBtn").onclick = () => openStatForm();
+document.getElementById("closeStatForm").onclick = () => {
+  document.getElementById("statFormModal").style.display = "none";
+};
+
+document.getElementById("statForm").onsubmit = async function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const stat = {
+    icon: form.icon.value,
+    number: form.number.value,
+    label: form.label.value,
+  };
+  const id = form._id.value;
+  let res;
+  if (id) {
+    res = await authFetch(`${STATS_UPDATE_URL}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(stat),
+    });
+  } else {
+    res = await authFetch(STATS_ADD_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(stat),
+    });
+  }
+  if (res.ok) {
+    document.getElementById("statFormModal").style.display = "none";
+    loadStats();
+  } else {
+    alert("Error saving stat");
+  }
+};
+
+// Modal HTML for delete confirmation
+if (!document.getElementById("deleteStatModal")) {
+  const modal = document.createElement("div");
+  modal.id = "deleteStatModal";
+  modal.style.display = "none";
+  modal.style.position = "fixed";
+  modal.style.top = 0;
+  modal.style.left = 0;
+  modal.style.width = "100vw";
+  modal.style.height = "100vh";
+  modal.style.background = "rgba(0,0,0,0.4)";
+  modal.style.alignItems = "center";
+  modal.style.justifyContent = "center";
+  modal.style.zIndex = 9999;
+  modal.innerHTML = `
+    <div style="background:#fff;padding:2em 2.5em;border-radius:12px;min-width:260px;display:flex;flex-direction:column;align-items:center;">
+      <div style="font-size:1.2em;font-weight:600;margin-bottom:1.2em;">Are you sure you want to delete this stat?</div>
+      <div style="display:flex;gap:1em;">
+        <button id="confirmDeleteStatBtn" style="background:#e53e3e;color:#fff;border:none;border-radius:8px;padding:0.6em 1.5em;font-size:1em;font-weight:600;">Delete</button>
+        <button id="cancelDeleteStatBtn" style="background:#2e3657;color:#fff;border:none;border-radius:8px;padding:0.6em 1.5em;font-size:1em;font-weight:600;">Cancel</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  document.getElementById("confirmDeleteStatBtn").onclick = deleteStatConfirmed;
+  document.getElementById("cancelDeleteStatBtn").onclick = hideDeleteStatModal;
+  modal.onclick = function(e) {
+    if (e.target === modal) hideDeleteStatModal();
+  };
+}
+
+// Load stats on dashboard page load
+document.addEventListener("DOMContentLoaded", loadStats);
 
 // ========== SLIDER IMAGES ADMIN ========== //
 const SLIDER_API_BASE =

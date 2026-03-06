@@ -256,6 +256,14 @@ textarea {
   display: block;
   opacity: 1;
 }
+.admin-stat-card {
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 24px rgba(30, 40, 90, 0.1);
+}
+.addStatBtn {
+  margin-top: 10px;
+}
 @media (max-width: 900px) {
   .admin-nav ul {
     display: none;

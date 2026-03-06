@@ -1384,7 +1384,7 @@ nav {
   background: #171a18;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   padding: 0 40px;
-  height: 70px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1425,6 +1425,20 @@ nav ul {
   background: #fff;
   border-radius: 2px;
   transition: 0.3s;
+}
+.stat-item {
+  background-color: #f7f7f7;
+  width: 30%;
+  text-align: center;
+}
+.stat-item {
+  min-width: 220px;
+  text-align: center;
+  box-sizing: border-box;
+  background: rgb(246, 252, 247);
+  border-radius: 10px;
+  padding: 32px 24px;
+  flex: 1 1 220px;
 }
 .hamburger span:first-child {
   width: 28px;

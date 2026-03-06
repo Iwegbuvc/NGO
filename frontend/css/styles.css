@@ -1487,7 +1487,7 @@ nav {
   background: #171a18;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   padding: 0 40px;
-  height: 70px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1908,5 +1908,97 @@ nav ul li a:hover {
     max-width: 32px !important;
     max-height: 32px !important;
     border-radius: 50% !important;
+  }
+}
+
+/* Admin Stats Section Styling */
+.admin-stats-section {
+  background: #f6fcf7;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(30, 40, 90, 0.08);
+  padding: 2.5em 2em;
+  margin: 2em 0;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.admin-stats-section h2 {
+  font-size: 2em;
+  font-weight: 700;
+  color: #2e3657;
+  margin-bottom: 1.2em;
+}
+#admin-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+  margin-bottom: 1.5em;
+}
+.admin-stat-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 1px 6px rgba(30, 40, 90, 0.08);
+  padding: 1.2em 1.5em;
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+  font-size: 1.15em;
+  font-weight: 500;
+}
+.admin-stat-card .stat-icon {
+  font-size: 2em;
+  color: #0ea5e9;
+  margin-right: 0.7em;
+}
+.admin-stat-card .stat-number {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #2e3657;
+  margin-right: 0.5em;
+}
+.admin-stat-card .stat-label {
+  color: #444;
+  font-size: 1.1em;
+  margin-right: auto;
+}
+.admin-stat-card button {
+  background: #2e3657;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  margin-left: 0.5em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.admin-stat-card button:hover {
+  background: #0ea5e9;
+}
+#addStatBtn {
+  background: #2e3657;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 1.5em;
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#addStatBtn:hover {
+  background: #0ea5e9;
+}
+@media (max-width: 900px) {
+  .admin-stats-section {
+    padding: 1.2em 0.5em;
+    max-width: 100%;
+  }
+  .admin-stat-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7em;
   }
 }
