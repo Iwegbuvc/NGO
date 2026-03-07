@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alex Okorie Foundation</title>
         <!-- Font Awesome CDN -->
+         
              <link rel="icon" type="image/svg+xml" href="/Asset/favicon.svg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <!-- Swiper CSS CDN -->
@@ -18,6 +19,8 @@
     />
     <!-- Local CSS -->
     <link rel="stylesheet" href="../css/styles.min.css" />
+    <!-- Toast CSS -->
+    
   </head>
   <body>
     <main>
@@ -87,29 +90,58 @@
            <div class="contact-info-box">
              <h2>Contact Information</h2>
              <ul class="contact-info-list">
-               <li><span class="contact-icon">&#9742;</span> (+234)8099990941</li>
-               <li><span class="contact-icon">&#9993;</span> info@ngo-platform.org</li>
-               <li><span class="contact-icon">&#9873;</span> 123 Charity Road, City, Country</li>
+               <li><span class="contact-icon">&#9742;</span> (+234) 803 290 6585</li>
+               <li><span class="contact-icon">&#9993;</span> alexokoriengo@gmail.com</li>
+               <!-- <li><span class="contact-icon">&#9873;</span> 123 Charity Road, City, Country</li> -->
              </ul>
-             <div class="contact-social">
-               <a href="#" aria-label="Facebook"><span>&#xf09a;</span></a>
-               <a href="#" aria-label="Twitter"><span>&#xf099;</span></a>
-               <a href="#" aria-label="Instagram"><span>&#xf16d;</span></a>
-               <a href="#" aria-label="LinkedIn"><span>&#xf0e1;</span></a>
-             </div>
+               <div class="footer-social">
+              <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+             <a href="mailto:alexokoriengo@gmail.com?subject=Support%20Alex%20Okorie%20Foundation&body=Hello%20Foundation%20Team," aria-label="Email" style="cursor:pointer;"><i class="fa fa-envelope"></i></a>
+              <a href="https://wa.me/2348032906585" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+              <style>
+                .footer-social a i {
+                  color: #000;
+                  font-size: 1.4em;
+                  transition: color 0.2s;
+                }
+              
+              </style>
+            </div>
            </div>
-           <form class="contact-form">
+           <form class="contact-form" id="contactForm">
              <h2>Drop a message</h2>
              <input type="text" name="name" placeholder="Name" required />
              <input type="email" name="email" placeholder="Email" required />
              <textarea name="message" placeholder="Message" rows="5" required></textarea>
              <button type="submit">Send Message</button>
            </form>
+           <div class="support-section" style="margin-top: 2em;">
+             <h2 class="support-title">Support the Foundation</h2>
+             <div class="bank-details-modern">
+               <div class="bank-icon">
+                 <i class="fa fa-university"></i>
+               </div>
+               <div class="bank-info">
+                 <div class="bank-row">
+                   <span class="bank-label">Bank Name:</span>
+                   <span class="bank-value">First Bank</span>
+                 </div>
+                 <div class="bank-row">
+                   <span class="bank-label">Account Name:</span>
+                   <span class="bank-value">Alex Okorie Foundation</span>
+                 </div>
+                 <div class="bank-row">
+                   <span class="bank-label">Account Number:</span>
+                   <span class="bank-value">0022669933</span>
+                 </div>
+               </div>
+             </div>
+           
+           </div>
          </div>
        </section>
        <!-- Contact Section End -->
   
-      <!-- Footer Section Start -->
     <!-- Footer Section Start -->
     <footer class="footer-section">
       <div class="footer-container">
@@ -149,5 +181,37 @@
       </div>
     </footer>
     <script src="../js/script.min.js"></script>
+    <script src="../admin/js/toast.min.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const message = formData.get("message");
+    try {
+      const res = await fetch("https://alexokoriengobe.onrender.com/api/contact/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast("Message sent successfully!", "success");
+        form.reset();
+      } else {
+        showToast("Failed to send message. Please try again.", "error");
+      }
+    } catch (err) {
+      showToast("Error sending message. Please try again.", "error");
+    }
+  });
+});
+    </script>
   </body>
 </html>
