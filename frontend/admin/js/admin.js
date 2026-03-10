@@ -84,10 +84,12 @@ async function deleteStatConfirmed() {
   if (res.ok) {
     hideDeleteStatModal();
     loadStats();
-    if (typeof showToast === "function") showToast("Stat deleted successfully", "success");
+    if (typeof showToast === "function")
+      showToast("Stat deleted successfully", "success");
   } else {
     hideDeleteStatModal();
-    if (typeof showToast === "function") showToast("Error deleting stat", "error");
+    if (typeof showToast === "function")
+      showToast("Error deleting stat", "error");
   }
 }
 
@@ -106,7 +108,8 @@ function renderStats(stats) {
       <button class="delete-stat-btn">Delete</button>
     `;
     card.querySelector(".edit-stat-btn").onclick = () => openStatForm(stat);
-    card.querySelector(".delete-stat-btn").onclick = () => showDeleteStatModal(stat._id);
+    card.querySelector(".delete-stat-btn").onclick = () =>
+      showDeleteStatModal(stat._id);
     list.appendChild(card);
   });
 }
@@ -190,7 +193,7 @@ if (!document.getElementById("deleteStatModal")) {
   document.body.appendChild(modal);
   document.getElementById("confirmDeleteStatBtn").onclick = deleteStatConfirmed;
   document.getElementById("cancelDeleteStatBtn").onclick = hideDeleteStatModal;
-  modal.onclick = function(e) {
+  modal.onclick = function (e) {
     if (e.target === modal) hideDeleteStatModal();
   };
 }
@@ -309,6 +312,116 @@ if (editProjectForm) {
 }
 
 // ========== PROJECTS SECTION ========== //
+// ========== NEWSLETTER & EVENTS ADMIN ========== //
+const NEWSLETTER_API_BASE =
+  "https://alexokoriengobe.onrender.com/api/newsletters";
+const NEWSLETTER_GET_URL = NEWSLETTER_API_BASE + "/getEvents";
+const NEWSLETTER_ADD_URL = NEWSLETTER_API_BASE + "/addEvents";
+const NEWSLETTER_UPDATE_URL = NEWSLETTER_API_BASE + "/updateEvents";
+const NEWSLETTER_DELETE_URL = NEWSLETTER_API_BASE + "/deleteEvents";
+
+async function fetchNewsletters() {
+  const res = await authFetch(NEWSLETTER_GET_URL);
+  return await res.json();
+}
+
+function renderNewsletters(newsletters) {
+  const list = document.getElementById("newsletterList");
+  if (!list) return;
+  list.innerHTML = "";
+  newsletters.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "newsletter-card";
+    card.style =
+      "background:#fff;border-radius:10px;padding:1em;margin-bottom:1em;box-shadow:0 2px 12px rgba(30,40,90,0.08);";
+    card.innerHTML = `
+      <div style="font-weight:600;font-size:1.1em;">${item.title}</div>
+      <div style="margin:0.5em 0;color:#444;">${item.description}</div>
+      <div style="color:#4e5ba6;font-size:0.95em;">Event Date: ${new Date(item.eventDate).toLocaleDateString()}</div>
+      <button class="edit-newsletter-btn" style="margin-right:0.7em;">Edit</button>
+      <button class="delete-newsletter-btn" style="background:#e53e3e;color:#fff;">Delete</button>
+    `;
+    card.querySelector(".edit-newsletter-btn").onclick = () =>
+      openNewsletterForm(item);
+    card.querySelector(".delete-newsletter-btn").onclick = () =>
+      deleteNewsletter(item._id);
+    list.appendChild(card);
+  });
+}
+
+async function loadNewsletters() {
+  const newsletters = await fetchNewsletters();
+  renderNewsletters(newsletters);
+}
+
+function openNewsletterForm(newsletter = {}) {
+  const form = document.getElementById("newsletterForm");
+  form.title.value = newsletter.title || "";
+  form.description.value = newsletter.description || "";
+  form.eventDate.value = newsletter.eventDate
+    ? newsletter.eventDate.split("T")[0]
+    : "";
+  form._id.value = newsletter._id || "";
+  form.style.display = "block";
+}
+
+document.getElementById("cancelNewsletterEdit").onclick = () => {
+  const form = document.getElementById("newsletterForm");
+  form.reset();
+  form._id.value = "";
+};
+
+document.getElementById("newsletterForm").onsubmit = async function (e) {
+  e.preventDefault();
+  const form = e.target;
+  const newsletter = {
+    title: form.title.value,
+    description: form.description.value,
+    eventDate: form.eventDate.value,
+  };
+  const id = form._id.value;
+  let res;
+  if (id) {
+    res = await authFetch(`${NEWSLETTER_UPDATE_URL}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newsletter),
+    });
+  } else {
+    res = await authFetch(NEWSLETTER_ADD_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newsletter),
+    });
+  }
+  if (res.ok) {
+    form.reset();
+    form._id.value = "";
+    loadNewsletters();
+    if (typeof showToast === "function")
+      showToast("Newsletter saved", "success");
+  } else {
+    alert("Error saving newsletter/event");
+  }
+};
+
+async function deleteNewsletter(id) {
+  if (!id) return;
+  const res = await authFetch(`${NEWSLETTER_DELETE_URL}/${id}`, {
+    method: "DELETE",
+  });
+  if (res.ok) {
+    loadNewsletters();
+    if (typeof showToast === "function")
+      showToast("Newsletter deleted", "success");
+  } else {
+    if (typeof showToast === "function")
+      showToast("Error deleting newsletter/event", "error");
+  }
+}
+
+// Load newsletters/events on dashboard page load
+document.addEventListener("DOMContentLoaded", loadNewsletters);
 const API_BASE = "https://alexokoriengobe.onrender.com/api/projects";
 
 // Helper: Get token from localStorage (adjust if you use a different method)

@@ -1,10 +1,99 @@
 <!doctype html>
 <html lang="en">
   <head>
-        <style>
-          .reveal-section { opacity: 0; transform: translateY(40px) scale(0.98); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1); }
-          .reveal-section.reveal { opacity: 1; transform: none; }
-        </style>
+    <style>
+      .reveal-section { opacity: 0; transform: translateY(40px) scale(0.98); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1); }
+      .reveal-section.reveal { opacity: 1; transform: none; }
+      .newsletter-section {
+        background: linear-gradient(135deg, #f6fff7 0%, #eaf6ff 100%);
+        border-radius: 24px;
+        box-shadow: 0 4px 32px rgba(30,40,90,0.08);
+        margin: 3em 0;
+        padding: 2.5em 1em;
+        position: relative;
+        overflow: hidden;
+      }
+      .newsletter-title {
+        text-align: center;
+        font-size: 2.3em;
+        font-weight: 800;
+        margin-bottom: 1.2em;
+        color: #17843b;
+        letter-spacing: 1px;
+        text-shadow: 0 2px 8px rgba(30,40,90,0.08);
+      }
+      .newsletter-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2em;
+        justify-content: center;
+      }
+      .newsletter-card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 24px rgba(30,40,90,0.13);
+        padding: 2.2em 1.7em;
+        max-width: 420px;
+        min-width: 280px;
+        flex: 1 1 320px;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #eaf6ff;
+        position: relative;
+        overflow: visible;
+        height: auto;
+      }
+      .newsletter-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 12px 32px rgba(30,40,90,0.18);
+        border-color: #b6e4c6;
+      }
+      .newsletter-card .newsletter-title-card {
+        font-size: 1.35em;
+        font-weight: 700;
+        color: #17843b;
+        margin-bottom: 0.3em;
+        letter-spacing: 0.5px;
+      }
+      .newsletter-card .newsletter-desc {
+        color: #444;
+        font-size: 1.07em;
+        line-height: 1.6;
+        margin-bottom: 0.5em;
+        font-weight: 500;
+      }
+      .newsletter-card .newsletter-date {
+        color: #4e5ba6;
+        font-size: 0.98em;
+        font-weight: 600;
+        margin-top: 0.2em;
+        display: flex;
+        align-items: center;
+        gap: 0.4em;
+      }
+      .newsletter-card .newsletter-date i {
+        color: #17843b;
+        font-size: 1.1em;
+      }
+      @media (max-width: 900px) {
+        .newsletter-cards {
+          flex-direction: column;
+          gap: 1.2em;
+          align-items: center;
+        }
+        .newsletter-card {
+          max-width: 100vw;
+          min-width: 0;
+          width: 100%;
+          box-sizing: border-box;
+          padding: 1.2em 0.7em;
+          margin-left: 0;
+          margin-right: 0;
+        }
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alex Okorie Foundation</title>
@@ -152,19 +241,27 @@ In this way, the foundation acts as the hands of Alex in the community, carrying
         </div>
       </section>
       <!-- Focus Section End -->
-          <!-- Testimonial Section Start -->
-          <section class="testimonial-section">
-              <h2 class="testimonial-title">How we are impacting lives and communities</h2>
-              <div class="swiper testimonial-swiper" id="testimonials">
-              <div class="swiper-wrapper" id="testimonial-swiper-wrapper">
-                <!-- Testimonial slides will be injected by JS -->
-              </div>
-              <!-- <div class="swiper-pagination swiper-pagination-fraction"></div> -->
-              <div class="swiper-button-prev"></div>
-              <div class="swiper-button-next"></div>
-            </div>
-          </section>
-          <!-- Testimonial Section End -->
+      <!-- Newsletter & Events Section Start -->
+      <section class="newsletter-section reveal-section" style="margin: 3em 0; padding: 2em 1em; ">
+        <h2 class="newsletter-title" style="text-align:center;font-size:2em;font-weight:700;margin-bottom:1em;color:#17843b;">Newsletter & Events</h2>
+        <div class="newsletter-cards" style="display:flex;flex-wrap:wrap;gap:2em;justify-content:center;">
+          <!-- Newsletter cards will be injected by JS -->
+        </div>
+      </section>
+      <!-- Newsletter & Events Section End -->
+      <!-- Testimonial Section Start -->
+      <section class="testimonial-section">
+          <h2 class="testimonial-title">How we are impacting lives and communities</h2>
+          <div class="swiper testimonial-swiper" id="testimonials">
+          <div class="swiper-wrapper" id="testimonial-swiper-wrapper">
+            <!-- Testimonial slides will be injected by JS -->
+          </div>
+          <!-- <div class="swiper-pagination swiper-pagination-fraction"></div> -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </section>
+      <!-- Testimonial Section End -->
       <!-- Footer Section Start -->
       <footer class="footer-section">
         <div class="footer-container">
@@ -211,6 +308,37 @@ In this way, the foundation acts as the hands of Alex in the community, carrying
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- Local JS -->
     <script src="js/script.min.js"></script>
+    <script>
+      // Newsletter & Events fetch and render
+      document.addEventListener('DOMContentLoaded', function() {
+        const API_URL = 'http://localhost:9091/api/newsletters/getEvents';
+        fetch(API_URL)
+          .then(res => res.json())
+          .then(newsletters => {
+            const container = document.querySelector('.newsletter-cards');
+            if (!container) return;
+            container.innerHTML = '';
+            if (!Array.isArray(newsletters) || newsletters.length === 0) {
+              container.innerHTML = '<div style="text-align:center;width:100%;color:#888;font-size:1.1em;">No newsletters or events yet.</div>';
+              return;
+            }
+            newsletters.forEach((item, idx) => {
+              const card = document.createElement('div');
+              card.className = 'newsletter-card';
+              card.innerHTML = `
+                <div class="newsletter-title-card"><i class="fa fa-bullhorn"></i> ${item.title}</div>
+                <div class="newsletter-desc">${item.description}</div>
+                <div class="newsletter-date"><i class="fa fa-calendar"></i> Event Date: ${item.eventDate ? new Date(item.eventDate).toLocaleDateString() : 'N/A'}</div>
+              `;
+              container.appendChild(card);
+            });
+          })
+          .catch(() => {
+            const container = document.querySelector('.newsletter-cards');
+            if (container) container.innerHTML = '<div style="text-align:center;width:100%;color:#888;font-size:1.1em;">Unable to load newsletters/events.</div>';
+          });
+      });
+    </script>
       <script>
         // Scroll reveal for main sections
         document.addEventListener('DOMContentLoaded', function() {

@@ -1,18 +1,35 @@
-@media (max-width: 900px) {
-  .nav-header .logout-btn {
-    display: none !important;
-  }
-}
 textarea[name="text"] {
   height: 40px;
 }
 textarea[name="description"],
 textarea[name="text"] {
   height: 120px;
+  width: 400px;
+  max-width: 100%;
 }
 textarea {
   resize: none;
 }
+@media (max-width: 900px) {
+  .nav-header .logout-btn {
+    display: none !important;
+  }
+}
+@media (max-width: 600px) {
+  textarea[name="description"],
+  textarea[name="text"] {
+    width: 215px;
+  }
+  input,
+  textarea {
+    margin-bottom: 12px;
+  }
+
+  button {
+    margin-bottom: 12px;
+  }
+}
+
 .testimonial-card {
   display: flex;
   align-items: flex-start;
@@ -24,6 +41,7 @@ textarea {
   gap: 1.2em;
   transition: box-shadow 0.2s;
 }
+
 .testimonial-card:hover {
   box-shadow: 0 4px 24px rgba(30, 40, 90, 0.14);
 }
@@ -697,6 +715,7 @@ textarea {
   border: 1px solid #d1d5db;
   border-radius: 6px;
   font-size: 1em;
+  margin-bottom: 10px;
   background: #f7f8fa;
   transition: border 0.2s;
 }

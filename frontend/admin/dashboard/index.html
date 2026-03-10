@@ -1,29 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <style>
-      /* .admin-hamburger span {
-              background: #fff !important;
-              height: 3px !important;
-              width: 28px !important;
-              display: block;
-              margin: 5px 0;
-              border-radius: 2px;
-              transition: 0.3s;
-            } */
-      /* .admin-hamburger {
-              background: none;
-              border: none;
-              outline: none;
-              display: inline-flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-              width: 40px;
-              height: 40px;
-              cursor: pointer;
-            } */
-    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -82,16 +59,16 @@
       textarea {
         font-family: "Inter", "Segoe UI", Arial, sans-serif;
       }
-        /* Slider image scaling */
-        #slider-images-list img {
-          width: 100%;
-          max-width: 600px;
-          height: 300px;
-          object-fit: cover;
-          border-radius: 10px;
-          box-shadow: 0 2px 12px rgba(30, 40, 90, 0.08);
-          margin-bottom: 1em;
-        }
+      /* Slider image scaling */
+      #slider-images-list img {
+        width: 100%;
+        max-width: 600px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px rgba(30, 40, 90, 0.08);
+        margin-bottom: 1em;
+      }
       .dashboard-header {
         display: flex;
         align-items: center;
@@ -458,6 +435,15 @@
             >Manage Testimonials</a
           >
         </div>
+        <div class="dashboard-card">
+          <div class="dashboard-card-title">Newsletter & Events</div>
+          <div class="dashboard-card-desc">
+            Create, edit, or delete newsletters and events for your audience.
+          </div>
+          <a href="#newsletter-section" class="dashboard-card-link"
+            >Manage Newsletters</a
+          >
+        </div>
       </div>
       <section id="slider">
         <h3>Homepage Slider Images</h3>
@@ -468,6 +454,24 @@
         <div id="slider-images-list"></div>
       </section>
       <!-- ...existing code... -->
+      <section id="newsletter-section" style="margin-top: 2em">
+        <h3>Newsletter & Events Management</h3>
+        <form id="newsletterForm">
+          <label>Title: <input type="text" name="title" required /></label
+          ><br />
+          <label
+            >Description:<br />
+            <textarea name="description" rows="3" required></textarea></label
+          ><br />
+          <label
+            >Event Date: <input type="date" name="eventDate" required /></label
+          ><br />
+          <input type="hidden" name="_id" />
+          <button type="submit">Save Newsletter/Event</button>
+          <button type="button" id="cancelNewsletterEdit">Cancel</button>
+        </form>
+        <div id="newsletterList"></div>
+      </section>
       <section class="admin-stats-section">
         <h2>Manage Stats Section</h2>
         <div id="admin-stats-list"></div>
