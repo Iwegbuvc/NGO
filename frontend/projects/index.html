@@ -3,23 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alex Okorie Foundation</title>
-        <link rel="icon" type="image/svg+xml" href="/Asset/favicon.svg" />
-        <!-- Font Awesome CDN -->
+    <title>Our Projects | Alex Okorie Foundation</title>
+    <meta name="description" content="Explore the impactful projects of the Alex Okorie Foundation in healthcare, education, and community development across Nigeria." />
+    <meta name="keywords" content="Alex Okorie Foundation, projects, gallery, charity, NGO, healthcare, education, community, Nigeria, impact" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://alexokorie.com/projects/" />
+    <meta property="og:title" content="Our Projects | Alex Okorie Foundation" />
+    <meta property="og:description" content="Explore the impactful projects of the Alex Okorie Foundation in healthcare, education, and community development across Nigeria." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://alexokorie.com/projects/" />
+    <meta property="og:image" content="https://alexokorie.com/Asset/logo.jpeg" />
+    <link rel="icon" type="image/svg+xml" href="/Asset/favicon.svg" />
+    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <!-- Swiper CSS CDN -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!-- Local CSS -->
     <link rel="stylesheet" href="../css/styles.min.css" />
   </head>
   <body>
     <main>
-      <nav>
+      <nav role="navigation" aria-label="Main Navigation">
       <a href="/" class="logo-link">
-        <img src="../Asset/logo.jpeg" alt="Alex Okorie Logo" class="main-logo"/>
+        <img src="../Asset/logo.jpeg" alt="Alex Okorie Foundation Logo" class="main-logo"/>
       </a>
         <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation">
           <span></span>
@@ -31,7 +37,7 @@
         <aside id="mobileNav" class="mobile-nav">
           <div class="mobile-nav-header">
              <a href="/" class="logo-link" style="height:50px; width:auto;" >
-        <img src="../Asset/logo.jpeg" alt="Alex Okorie Logo" class="main-logo" />
+        <img src="../Asset/logo.jpeg" alt="Alex Okorie Foundation Logo" class="mobile-nav-logo" />
       </a>
             <button class="close-nav" id="closeNavBtn" aria-label="Close navigation">&times;</button>
           </div>
@@ -39,7 +45,9 @@
             <li><a href="/">Home</a></li>
             <li><a href="/about/">About Us</a></li>
             <li><a href="/projects/">Projects</a></li>
+              <li><a href="/newsletter/">Newsletter</a></li>
             <li><a href="/contact/">Contact</a></li>
+            
           </ul>
         </aside>
         <!-- Desktop Nav -->
@@ -47,15 +55,15 @@
           <li><a href="/">Home</a></li>
           <li><a href="/about/">About Us</a></li>
           <li><a href="/projects/">Projects</a></li>
+            <li><a href="/newsletter/">Newsletter</a>
           <li><a href="/contact/">Contact</a></li>
         </ul>
       </nav>
       <section class="about-hero" style="position:relative;">
         <img
           src="../Asset/projectBanner (1).jpeg"
-          alt="Our Projects Banner"
+          alt="Our Projects Banner showing Alex Okorie Foundation projects"
           class="about-hero-img"
-          style="display:block;width:100vw;max-width:100vw;height:100vh;object-fit:cover;object-position:top;"
         />
         <div style="position:absolute;top:0;left:0;width:100vw;height:100vh;background:rgba(20,20,20,0.45);z-index:1;"></div>
         <div class="about-hero-text" style="position:absolute;z-index:2;left:5vw;bottom:32px;color:#fff;">
@@ -89,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const card = document.createElement('div');
         card.className = 'project-card';
         card.innerHTML = `
-          <img src="${project.images && project.images[0] ? project.images[0] : '../Asset/product_14.png'}" alt="Project Image">
+          <img src="${project.images && project.images[0] ? project.images[0] : '../Asset/product_14.png'}" alt="Alex Okorie Foundation Project Image">
           <div class="project-info">
             <h3>${project.text}</h3>
             <p class="location">${project.location}</p>
@@ -123,12 +131,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById('projectDetailModal');
     const content = document.getElementById('projectDetailContent');
     content.innerHTML = `
-      <img src="${project.images && project.images[0] ? project.images[0] : '../Asset/product_14.png'}" alt="Project Image" style="width:100%;max-height:300px;object-fit:cover;border-radius:10px;margin-bottom:1em;">
+      <img src="${project.images && project.images[0] ? project.images[0] : '../Asset/product_14.png'}" alt="Alex Okorie Foundation Project Image" style="width:100%;max-height:300px;object-fit:cover;border-radius:10px;margin-bottom:1em;">
       <h3>${project.text}</h3>
       <p class="location">${project.location}</p>
       <p>${project.description}</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        ${(project.images || []).slice(1).map(img => `<img src="${img}" style="width:90px;height:90px;object-fit:cover;border-radius:8px;">`).join('')}
+        ${(project.images || []).slice(1).map(img => `<img src="${img}" alt="Alex Okorie Foundation Project Gallery Image" style="width:90px;height:90px;object-fit:cover;border-radius:8px;">`).join('')}
       </div>
     `;
     modal.style.display = 'flex';
@@ -143,11 +151,11 @@ document.addEventListener("DOMContentLoaded", function () {
     </main>
     <!-- ...existing code... -->
     <!-- Footer Section Start -->
-    <footer class="footer-section">
+    <footer class="footer-section" role="contentinfo">
       <div class="footer-container">
         <div class="footer-about">
          <a href="/" class="logo-link">
-        <img src="../Asset/logo.jpeg" alt="NGO Logo" class="main-logo" />
+        <img src="../Asset/logo.jpeg" alt="Alex Okorie Foundation Logo" class="main-logo" />
       </a>
           <p>
            The Alex Okorie Foundation was born from a desire to ensure that the light of an extraordinary man never fades. We are a non-profit organization founded in loving memory of Alex Okorie a man who was, to many, a mentor, a hero, and a comforter. To his family, he was a loving husband and a wonderful father.

@@ -457,15 +457,12 @@
       <section id="newsletter-section" style="margin-top: 2em">
         <h3>Newsletter & Events Management</h3>
         <form id="newsletterForm">
-          <label>Title: <input type="text" name="title" required /></label
-          ><br />
-          <label
-            >Description:<br />
-            <textarea name="description" rows="3" required></textarea></label
-          ><br />
-          <label
-            >Event Date: <input type="date" name="eventDate" required /></label
-          ><br />
+          <label>Title: <input type="text" name="title" required /></label><br />
+          <label>Description:<br />
+            <textarea name="description" rows="3" required></textarea>
+          </label><br />
+          <label>Event Date: <input type="date" name="eventDate" required /></label><br />
+          <label>Image: <input type="file" name="image" accept="image/*" /></label><br />
           <input type="hidden" name="_id" />
           <button type="submit">Save Newsletter/Event</button>
           <button type="button" id="cancelNewsletterEdit">Cancel</button>

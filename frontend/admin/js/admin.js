@@ -338,13 +338,12 @@ function renderNewsletters(newsletters) {
       <div style="font-weight:600;font-size:1.1em;">${item.title}</div>
       <div style="margin:0.5em 0;color:#444;">${item.description}</div>
       <div style="color:#4e5ba6;font-size:0.95em;">Event Date: ${new Date(item.eventDate).toLocaleDateString()}</div>
+      ${item.image ? `<div style="margin:0.5em 0;"><img src="${item.image}" alt="Newsletter Image" style="max-width:180px;max-height:100px;border-radius:6px;box-shadow:0 1px 4px rgba(30,40,90,0.08);"/></div>` : ""}
       <button class="edit-newsletter-btn" style="margin-right:0.7em;">Edit</button>
       <button class="delete-newsletter-btn" style="background:#e53e3e;color:#fff;">Delete</button>
     `;
-    card.querySelector(".edit-newsletter-btn").onclick = () =>
-      openNewsletterForm(item);
-    card.querySelector(".delete-newsletter-btn").onclick = () =>
-      deleteNewsletter(item._id);
+    card.querySelector(".edit-newsletter-btn").onclick = () => openNewsletterForm(item);
+    card.querySelector(".delete-newsletter-btn").onclick = () => deleteNewsletter(item._id);
     list.appendChild(card);
   });
 }
@@ -362,6 +361,7 @@ function openNewsletterForm(newsletter = {}) {
     ? newsletter.eventDate.split("T")[0]
     : "";
   form._id.value = newsletter._id || "";
+  if (form.image) form.image.value = "";
   form.style.display = "block";
 }
 
@@ -374,24 +374,24 @@ document.getElementById("cancelNewsletterEdit").onclick = () => {
 document.getElementById("newsletterForm").onsubmit = async function (e) {
   e.preventDefault();
   const form = e.target;
-  const newsletter = {
-    title: form.title.value,
-    description: form.description.value,
-    eventDate: form.eventDate.value,
-  };
+  const formData = new FormData();
+  formData.append("title", form.title.value);
+  formData.append("description", form.description.value);
+  formData.append("eventDate", form.eventDate.value);
+  if (form.image && form.image.files && form.image.files[0]) {
+    formData.append("image", form.image.files[0]);
+  }
   const id = form._id.value;
   let res;
   if (id) {
     res = await authFetch(`${NEWSLETTER_UPDATE_URL}/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newsletter),
+      body: formData,
     });
   } else {
     res = await authFetch(NEWSLETTER_ADD_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newsletter),
+      body: formData,
     });
   }
   if (res.ok) {
